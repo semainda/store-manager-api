@@ -21,7 +21,6 @@ class BaseModel(ModelResponses):
             for data in self.dt_name:
                 match = kwargs.items() & data.items()
                 if match:
-                    print (match)
                     exist_values = [items for _, items in enumerate(match)]
                     return self.already_exist_response(exist_values)
                     break

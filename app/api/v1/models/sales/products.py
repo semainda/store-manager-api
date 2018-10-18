@@ -25,9 +25,15 @@ class ProductsModel(BaseModel):
         self.products = DataStuctures().datastructures()[5]
         super().__init__(self.products, "products")
 
-    def create_products(self, *args):
+    def create_products(
+        self, prod_name, price, quantity, size, category,
+        sub_category):
         """Method that creates products"""
-        return self.insert_entries(args)
+        prod_id = len(self.products) + 1
+        return self.insert_entries(
+            prod_id=prod_id, prod_name=prod_name,
+            price=price, quantity=quantity,
+            size=size, category=category, sub_category=sub_category)
 
     def get_product_by_field(self, key, value):
         """Method that returns products entries by any field"""

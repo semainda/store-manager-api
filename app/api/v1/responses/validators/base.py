@@ -3,9 +3,9 @@
 class ValidatorsResponse:
     """Class that defines validators response"""
 
-    def invalid_contents_response(self, key, value):
+    def invalid_contents_response(self, key):
             """Method that returns invalid responses"""
             return {
-                "Message": "{} '{}' is invalid for it to be created".format(
-                    key, value)
+                "Message": "{} is invalid for it to be created".format(
+                    key)
                 }, 400
