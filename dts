@@ -1,0 +1,42 @@
+def __init__(self):
+        self.structures_db = DataStuctures()
+
+    def roles_dt(self):
+        """Method that returns roles data structure"""
+        roles = self.structures_db.datastructures[0]
+        return roles
+
+    def users_dt(self):
+        """Method that returns users data structure"""
+        users = self.structures_db.datastructures[1]
+        return users
+
+    def user_roles_dt(self):
+        """Method that returns user_roles data structure"""
+        user_roles = self.structures_db.datastructures[2]
+        return user_roles
+
+    def categories_dt(self):
+        """Method that returns categories data structure"""
+        categories = self.structures_db.datastructures[3]
+        return categories
+
+    def sub_categories_dt(self):
+        """Method that returns sub-categories data structure"""
+        sub_categories = self.structures_db.datastructures[4]
+        return sub_categories
+
+    def products_dt(self):
+        """Method that returns products data structure"""
+        products = self.structures_db.datastructures[5]
+        return products
+
+    def sales_dt(self):
+        """Method that returns sales data structure"""
+        sales = self.structures_db.datastructures[6]
+        return sales
+
+    def sold_products_dt(self):
+        """Method that returns sold_producs data structure"""
+        sold_products = self.structures_db.datastructures[7]
+        return sold_products

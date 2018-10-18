@@ -15,6 +15,7 @@ coverage = "*"
 gunicorn = "*"
 codecov = "*"
 pytest-cov = "*"
+termcolor = "*"
 
 [dev-packages]
 
