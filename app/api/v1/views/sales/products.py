@@ -85,6 +85,17 @@ class Products(Resource, Initializer):
         return self.response
 
 
-class ProductsActivity(Resource):
+class ProductsActivity(Resource, Initializer):
     """Class that handels endpoints that requires unique ids"""
-    pass
+    @jwt_required
+    def get(self, prod_id):
+        """Method that returns a product by product_id"""
+        if get_jwt_identity():
+            user_role_name = self.auth.return_role_name(get_jwt_identity())
+            if user_role_name in ("store_owner", "store_attendant"):
+                self.response = self.product.get_product(prod_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

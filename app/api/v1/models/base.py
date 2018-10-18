@@ -36,7 +36,8 @@ class BaseModel(ModelResponses):
         dt_row = [row for row in self.dt_name if row["id"] == entry_id]
         if dt_row:
             self.response = self.exist_response(dt_row[0])
-        self.response = self.does_not_exist_response(entry_id)
+        else:
+            self.response = self.does_not_exist_response(entry_id)
         return self.response
 
     def get_entries(self):
