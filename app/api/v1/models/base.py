@@ -43,7 +43,8 @@ class BaseModel(ModelResponses):
         """Method that return entries of a given data structure"""
         if self.dt_name:
             self.response = self.exists_response(self.dt_name)
-        self.response = self.does_not_exists_response()
+        else:
+            self.response = self.does_not_exists_response()
         return self.response
 
     def get_entry_by_any_field(self, k, v):
