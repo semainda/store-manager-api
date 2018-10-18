@@ -10,26 +10,26 @@ class BaseModel(ModelResponses):
         self.dt_name = dt_name
         self.response = ""
 
-    def insert_entries(self, **kwargs):
+    def insert_entries(self, *args):
         """Method that append entries to a given data structure"""
-        # new_entry = [row for row in kwargs]
+        print(self.dt_name)
+        new_entry = [row for row in args]
         if not self.dt_name:
-            self.dt_name.extend([kwargs])
-            self.response = self.create_response([kwargs])
+            self.dt_name.extend(new_entry)
+            self.response = self.creates_response()
         else:
             # common k, v lookup
-            for data in self.dt_name:
-                match = kwargs.items() & data.items()
-                if match:
-                    print (match)
-                    exist_values = [items for _, items in enumerate(match)]
-                    return self.already_exist_response(exist_values)
-                    break
-                # _, val = items
-                #exist_values.append(val)
+            match = [row.items() & data.items() for row in args for data in self.dt_name]
+            if match[0]:
+                exist_values = [items[1] for _, items in enumerate(match[0])]
+                """for _, items in enumerate(match[0]):
+                    _, val = items
+                    exist_values.append(val)
+                # _, v = next(iter(match[0]))"""
+                self.response = self.already_exist_response(exist_values)
             else:
-                self.dt_name.extend([kwargs])
-                self.response = self.create_response([kwargs])
+                self.dt_name.extend(new_entry)
+                self.response = self.creates_response()
         return self.response
 
     def get_entry(self, entry_id):

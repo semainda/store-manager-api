@@ -10,6 +10,7 @@ from .db_config.db_setups import DataStuctures
 
 # api endpoints imports
 from .api.v1.views.users.login import Login
+from .api.v1.views.users.roles import Roles
 
 # blueprint object
 API_V1_BLUEPRINT = Blueprint("v1", __name__, url_prefix="/api/v1")
@@ -30,11 +31,21 @@ class StoreManager:
         print(self.owner)
         # blueprint rgistration
         self.app.register_blueprint(API_V1_BLUEPRINT)
-        # user auth endpoints
-        API.add_resource(Login, "/auth/login")
         # initialize JWTManager
         JWTManager(self.app)
 
     def create_app(self):
         """Method that instantiate flask app with a given config"""
         return self.app
+
+######################################################
+#           Store Attendants Endpoints               #
+######################################################
+
+API.add_resource(Login, "/auth/login")
+
+######################################################
+#           Store Owner Endpoints                    #
+######################################################
+
+API.add_resource(Roles, "/roles")

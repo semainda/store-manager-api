@@ -4,9 +4,9 @@
 class ModelResponses:
     """Class that handels general models responses"""
 
-    def __init__(self, dt_name):
-        self.name = str(dt_name)[:-1]
-        self.names = str(dt_name)
+    def __init__(self, str_dt_name):
+        self.name = str(str_dt_name)[:-1]
+        self.names = str(str_dt_name)
 
     def exists_response(self, dt_values):
         """Method that returns exists response"""
@@ -30,7 +30,7 @@ class ModelResponses:
     def create_response(self, name):
         """Method that returns created response"""
         return {
-            "Message": "{} named '{}' created successful".format(
+            "Message": "{}: '{}' created successful".format(
                 self.name, name)
             }, 201
 
@@ -47,13 +47,6 @@ class ModelResponses:
             "Message": "{} with value(s) '{}' already exists".format(
                 self.name, values)
             }, 409
-
-    def invalid_contents_response(self, name):
-        """Method that returns invalid responses"""
-        return {
-            "Message": "{} '{}' is invalid for it to be created".format(
-                self.name, name)
-            }, 400
 
     def update_response(self, dt_id):
         """Method that returns update response"""
