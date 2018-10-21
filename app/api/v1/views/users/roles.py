@@ -33,7 +33,7 @@ class Roles(Resource, Initializer):
     
     @jwt_required
     def get(self):
-        """Method that return products"""
+        """Method that return roles"""
         if get_jwt_identity():
             user_role_name = self.auth.return_role_name(get_jwt_identity())
             if user_role_name == "store_owner":
@@ -64,6 +64,17 @@ class Roles(Resource, Initializer):
         return self.response
 
 
-class RolesActivity(Resource):
+class RolesActivity(Resource, Initializer):
     """Class that handels endpoints that requires unique ids"""
-    pass
+    @jwt_required
+    def get(self, role_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_role_name = self.auth.return_role_name(get_jwt_identity())
+            if user_role_name == "store_owner":
+                self.response = self.role.get_role(role_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

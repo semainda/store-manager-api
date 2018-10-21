@@ -10,7 +10,7 @@ from .db_config.db_setups import DataStuctures
 
 # api endpoints imports
 from .api.v1.views.users.login import Login
-from .api.v1.views.users.roles import Roles 
+from .api.v1.views.users.roles import Roles, RolesActivity
 from .api.v1.views.sales.products import Products, ProductsActivity
 from .api.v1.views.sales.sales import Sales, SalesActivity
 from .api.v1.views.sales.sales_summary import SalesSummary, SalesSummaryActivity, UserSalesSummary
@@ -58,5 +58,6 @@ API.add_resource(SalesSummaryActivity, "/sales/mysales")
 ######################################################
 
 API.add_resource(Roles, "/roles")
+API.add_resource(RolesActivity, "/roles/<int:role_id>")
 API.add_resource(SalesSummary, "/sales/summary")
 API.add_resource(UserSalesSummary, "/sales/summary/<int:user_id>")
