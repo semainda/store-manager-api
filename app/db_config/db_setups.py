@@ -49,13 +49,13 @@ class DataStuctures:
         data = args[0]
         self.roles.append(
             dict(
-                role_id=1,
+                id=1,
                 role_name=data[0]
                 )
             )
         self.users.append(
             dict(
-                user_id=1,
+                id=1,
                 first_name=data[1],
                 last_name=data[2],
                 email=data[3],
@@ -66,7 +66,7 @@ class DataStuctures:
             )
         self.user_roles.append(
             dict(
-                user_id=self.users[0]["user_id"],
-                role_id=self.roles[0]["role_id"])
+                user_id=self.users[0]["id"],
+                role_id=self.roles[0]["id"])
             )
         return colored(" * Store Owner: {}".format(self.users[0]["user_name"]), "green")

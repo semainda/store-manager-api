@@ -28,11 +28,11 @@ class Login(Resource):
             "user_name", data_parsed["user_name"])
         if user_data:
             if self.auth.verify_hashed_password(
-                    data_parsed["password"], user_data[0]["password"]):
+                    data_parsed["password"], user_data["password"]):
                 access_token = self.auth.return_access_token(
-                    user_data[0]["user_id"])
+                    user_data["id"])
                 self.response = self.resp.user_success_login_response(
-                    user_data[0]["user_name"], access_token)
+                    user_data["user_name"], access_token)
             else:
                 self.response = self.resp.user_login_with_error_response()
         else:

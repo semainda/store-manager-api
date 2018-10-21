@@ -25,6 +25,14 @@ class ProductsModel(BaseModel):
         self.products = DataStuctures().datastructures()[5]
         super().__init__(self.products, "products")
 
+    # Method overide
+    def get_entry_by_any_field(self, k, v):
+        """Method that check for a given field and returns it"""
+        dt_row = [row for row in self.dt_name if row[k] == v]
+        if dt_row:
+            return dt_row[0]
+        return dt_row
+
     def create_products(
         self, prod_name, price, quantity, size, category,
         sub_category):
@@ -54,3 +62,8 @@ class ProductsModel(BaseModel):
     def update_products(self, prod_id, **kwargs):
         """Method that updates categories entries given prod_id"""
         return self.update_entries(prod_id, kwargs)
+
+    def update_product_qty(self, p_id, new_qty):
+        """Method that update entries of a data structure"""
+        dt_row = [row for row in self.products if row["id"] == p_id]
+        dt_row[0]["quantity"] = new_qty

@@ -14,15 +14,24 @@ class SoldProductsModel(BaseModel):
         sale_id
         prod_id
         sold_qty
+        price
+        total
     """
 
     def __init__(self):
         self.sold_products = DataStuctures().datastructures()[7]
-        super().__init__(self.sold_products, "sold_products")
+        super().__init__(self.sold_products, "Sale Orders")
 
-    def create_sold_products(self, *args):
+    # method overide
+    def get_entries(self):
+        """Method that return sales"""
+        return self.sold_products
+
+    def create_sold_products(self, sale_id, prod_name, qty, price, total):
         """Method that creates sold_products"""
-        return self.insert_entries(args)
+        return self.insert_sales(
+            sale_id=sale_id, prod_name=prod_name,
+            quantity=qty, price=price, total=total)
 
     def get_sold_product_by_field(self, key, value):
         """Method that returns sold_products entries by any field"""

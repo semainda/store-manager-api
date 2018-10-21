@@ -1,0 +1,84 @@
+"""Module that defines sales endpoints"""
+# standard imports
+from datetime import datetime
+
+# thirdparty imports
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
+# local imports
+from app.api.v1.auth.user_auth import UserAuth
+from app.api.v1.models.sales.products import ProductsModel
+from app.api.v1.models.users.users import UserModel
+from app.api.v1.models.sales.sales import SalesModel
+from app.api.v1.models.sales.sold_products import SoldProductsModel
+from app.api.v1.responses.auth.base import AuthResponses
+from app.api.v1.responses.validators.base import ValidatorsResponse
+from app.api.v1.utils.validators import input_validators
+
+
+PARSER = reqparse.RequestParser()
+PARSER.add_argument(
+    "prod_id", required=True, type=int, help="Key prod_id not found")
+PARSER.add_argument(
+    "quantity", required=True, type=int, help="Key quantity not found")
+
+
+class Initializer:
+    """Method that initializes required classes"""
+    def __init__(self):
+        self.auth = UserAuth()
+        self.resp = AuthResponses()
+        self.product = ProductsModel()
+        self.user = UserModel()
+        self.sale = SalesModel()
+        self.sold = SoldProductsModel()
+        self.validator = ValidatorsResponse()
+        self.sale_date = datetime.now().strftime("%Y-%m-%d")
+        self.response = ""
+
+
+class Sales(Resource, Initializer):
+    """Class that creates and ruturn sales"""
+    def __init__(self):
+        super().__init__()
+    
+    @jwt_required
+    def post(self):
+        """Method that creates sale order"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            user_role_name = self.auth.return_role_name(user_id)
+            if user_role_name in "store_attendant":
+                data_parsed = PARSER.parse_args()
+                prod_id = data_parsed["prod_id"]
+                quantity = data_parsed["quantity"]
+                is_valid = input_validators(
+                    prod_id=prod_id, quantity=quantity)
+                if is_valid[0]:
+                    product = self.product.get_entry_by_any_field(
+                        "id", prod_id)
+                    if product:
+                        if quantity <= product["quantity"]:
+                            qty_remain = product["quantity"] - quantity
+                            sale_id = self.sale.create_sales(
+                                user_id, self.sale_date)
+                            unit_price = product["price"]
+                            total_price = unit_price * quantity
+                            self.product.update_product_qty(
+                                product["id"], qty_remain)
+                            self.response = self.sold.create_sold_products(
+                                sale_id, product["prod_name"],
+                                quantity, unit_price, total_price)
+                        else: self.response = self.sale.get_minimum_allowed(
+                            product["quantity"], product["prod_name"])
+                    else:
+                        self.response = self.product.get_product(prod_id)
+                else:
+                    self.response = self.validator.invalid_contents_response(
+                        is_valid[1])
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

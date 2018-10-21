@@ -37,6 +37,10 @@ class UserModel(BaseModel):
             first_name, last_name, email, user_name, password, created_at
         )
 
+    def get_users_entries(self):
+        """Method that return sales"""
+        return self.users
+    
     def get_user_by_field(self, key, value):
         """Method that returns user entries by any field"""
         return self.get_entry_by_any_field(key, value)

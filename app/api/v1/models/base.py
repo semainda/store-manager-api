@@ -21,7 +21,7 @@ class BaseModel(ModelResponses):
             for data in self.dt_name:
                 match = kwargs.items() & data.items()
                 if match:
-                    exist_values = [items for _, items in enumerate(match)]
+                    exist_values = [dict(match)]
                     return self.already_exist_response(exist_values)
                     break
                 # _, val = items
@@ -50,8 +50,13 @@ class BaseModel(ModelResponses):
 
     def get_entry_by_any_field(self, k, v):
         """Method that check for a given field and returns it"""
+        row_data = ""
         dt_row = [row for row in self.dt_name if row[k] == v]
-        return dt_row
+        if dt_row:
+            row_data = dt_row[0]
+        else:
+            row_data = self.does_not_exist_response(k)
+        return row_data
 
     def update_entries(self, entry_id, **kwargs):
         """Method that update entries of a data structure"""
@@ -93,4 +98,20 @@ class BaseModel(ModelResponses):
             poped_item = self.dt_name.pop(entry_index())
             deleted_entries.append(poped_item)
             self.response = self.delete_unexist_response(deleted_entries, un_exist_id)
+        return self.response
+
+    # sales specific methods that requires responses
+    def check_for_min_entries(self, available, prod_name):
+        """Method that check for alloweed min and returns it"""
+        min_value = 0
+        if available == min_value:
+            self.response = self.min_value_reached(prod_name)
+        else:
+            self.response = self.min_value_availabe(prod_name, available)
+        return self.response
+
+    def insert_sales(self, **kwargs):
+        """Method that append entries to a given data structure"""
+        self.dt_name.extend([kwargs])
+        self.response = self.create_response([kwargs])
         return self.response

@@ -12,6 +12,7 @@ from .db_config.db_setups import DataStuctures
 from .api.v1.views.users.login import Login
 from .api.v1.views.users.roles import Roles 
 from .api.v1.views.sales.products import Products, ProductsActivity
+from .api.v1.views.sales.sales import Sales
 
 # blueprint object
 API_V1_BLUEPRINT = Blueprint("v1", __name__, url_prefix="/api/v1")
@@ -46,7 +47,7 @@ class StoreManager:
 API.add_resource(Login, "/auth/login")
 API.add_resource(Products, "/products")
 API.add_resource(ProductsActivity, "/products/<int:prod_id>")
-
+API.add_resource(Sales, "/sales")
 
 ######################################################
 #           Store Owner Endpoints                    #

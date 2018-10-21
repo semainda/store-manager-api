@@ -20,11 +20,11 @@ class ModelResponses:
         """Method that returns does_not_exists_response"""
         return {"Message": "'{}' does not exists".format(self.names)}, 404
 
-    def does_not_exist_response(self, dt_id):
+    def does_not_exist_response(self, dt_key):
         """Method that returns does not exist response"""
         return {
-            "Message": "{} with id '{}' does not exists".format(
-                self.name, dt_id)
+            "Message": "{} with key value '{}' does not exists".format(
+                self.name, dt_key)
             }, 404
 
     def create_response(self, name):
@@ -70,3 +70,21 @@ class ModelResponses:
             not deleted because does not exist".format(
                 self.name, values, self.names, dt_id)
             }, 200
+    
+    def min_value_reached(self, prod_name):
+        """Method that returns mini reached response"""
+        return {
+            "Message":
+            "Sorry this product '{}' is out of stock for now."
+            "Try again when new stock has arraived".format(
+                prod_name)
+            }, 209
+
+    def min_value_availabe(self, prod_name, available):
+        """Method that return available for sale"""
+        return {
+            "Message":
+            "This product '{}' has only '{}' items in stock."
+            "So sale order should not exceed this value".format(
+                prod_name, available)
+            }, 209

@@ -13,16 +13,41 @@ class SalesModel(BaseModel):
         sale_id
         user_id
         sale_date
-        price
     """
 
     def __init__(self):
         self.sales = DataStuctures().datastructures()[6]
         super().__init__(self.sales, "sales")
+    
+    # Method overide: insert_entries
 
-    def create_sales(self, *args):
+    def insert_entries(self, **kwargs):
+        """Method that overides to do something else"""
+        sale_id = ""
+        if not self.sales:
+            self.sales.extend([kwargs])
+            sale_id = kwargs["user_id"]
+        else:
+            # common k, v lookup
+            for data in self.sales:
+                match = kwargs.items() & data.items()
+                if match:
+                    sale_id = kwargs["id"] - 1
+                    break
+            else:
+                self.sales.extend([kwargs])
+                sale_id = kwargs["id"]
+        return sale_id
+
+    def get_sales_entries(self):
+        """Method that return sales"""
+        return self.sales
+
+    def create_sales(self, user_id, sale_date):
         """Method that creates sales"""
-        return self.insert_entries(args)
+        sale_id = len(self.sales) + 1
+        return self.insert_entries(
+            id=sale_id, user_id=user_id, sale_date=sale_date)
 
     def get_sale_by_field(self, key, value):
         """Method that returns sales entries by any field"""
@@ -43,3 +68,7 @@ class SalesModel(BaseModel):
     def update_sales(self, sale_id, **kwargs):
         """Method that updates sales entries given sale_id"""
         return self.update_entries(prod_id, kwargs)
+    
+    def get_minimum_allowed(self, available_qty, prod_name):
+        """Method that sold_qty against minimum value to be in store"""
+        return self.check_for_min_entries(available_qty, prod_name)
