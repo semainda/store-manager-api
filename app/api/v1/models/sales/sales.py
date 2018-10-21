@@ -67,7 +67,7 @@ class SalesModel(BaseModel):
 
     def update_sales(self, sale_id, **kwargs):
         """Method that updates sales entries given sale_id"""
-        return self.update_entries(prod_id, kwargs)
+        return self.update_entries(sale_id, kwargs)
     
     def get_minimum_allowed(self, available_qty, prod_name):
         """Method that sold_qty against minimum value to be in store"""

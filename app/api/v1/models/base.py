@@ -22,7 +22,7 @@ class BaseModel(ModelResponses):
                 match = kwargs.items() & data.items()
                 if match:
                     exist_values = [dict(match)]
-                    return self.already_exist_response(exist_values)
+                    self.response = self.already_exist_response(exist_values)
                     break
                 # _, val = items
                 #exist_values.append(val)

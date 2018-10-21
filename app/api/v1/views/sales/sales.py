@@ -44,6 +44,45 @@ class Sales(Resource, Initializer):
         super().__init__()
     
     @jwt_required
+    def get(self):
+        """Method that return products"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            user_role_name = self.auth.return_role_name(user_id)
+            if user_role_name == "store_owner":
+                # dict list
+                sales = self.sale.get_sales_entries()
+                if sales:
+                    #returns users dict list
+                    users = self.user.get_users_entries()
+                    # returns sold products dict list
+                    sold_products = self.sold.get_sold_products()
+                    sales_details = {
+                        "Store Manager Sales Details Reports":
+                        {user["first_name"].title() + " " +
+                        user["last_name"].title() + " Sale Orders": [
+                            dict(Sale_ID=sale["id"], Product=product["prod_name"],
+                                Qty=product["quantity"],
+                                Unit_price=product["price"],
+                                Total_price=product["total"],
+                                Sales_data=sale["sale_date"]
+                            ) for sale in sales 
+                                if sale["user_id"] == user["id"]
+                                    for product in sold_products
+                                        if product["sale_id"] == sale["id"]]
+                                            for user in users
+                        }
+                    }
+                    self.response = sales_details
+                else:
+                    self.response = self.sale.get_sales()
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+    
+    @jwt_required
     def post(self):
         """Method that creates sale order"""
         if get_jwt_identity():
