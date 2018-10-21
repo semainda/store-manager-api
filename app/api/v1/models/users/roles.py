@@ -47,6 +47,6 @@ class RoleModel(BaseModel):
         """Method that deletes roles"""
         return self.delete_entries(role_id)
 
-    def update_roles(self, role_id, **kwargs):
+    def update_roles(self, role_id, role_name):
         """Method that updates roles entries given role_id"""
-        return self.update_entries(role_id, kwargs)
+        return self.update_entries(id=role_id, role_name=role_name)

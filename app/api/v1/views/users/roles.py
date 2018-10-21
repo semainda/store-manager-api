@@ -105,3 +105,22 @@ class RolesActivity(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
+    
+    @jwt_required
+    def put(self, role_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_role_name = self.auth.return_role_name(get_jwt_identity())
+            if user_role_name == "store_owner":
+                data_parsed = PARSER.parse_args()
+                role_name = data_parsed["role_name"]
+                role = self.role.get_entry_by_any_field("id", role_id)
+                if role:
+                    self.response = self.role.update_roles(role_id, role_name)
+                else:
+                    self.response = self.role.get_role(role_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

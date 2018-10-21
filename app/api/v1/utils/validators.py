@@ -6,7 +6,7 @@ def input_validators(**kwargs):
     validation_output = ""
     for key in kwargs:
         if isinstance(kwargs[key], str):
-            if not re.fullmatch(r"^[a-zA-Z ]+$", str(kwargs[key])) and isinstance(kwargs[key], str):
+            if not re.fullmatch(r"^[a-zA-Z_ ]+$", str(kwargs[key])) and isinstance(kwargs[key], str):
                 validation_output = False, key
                 break
             validation_output = True,

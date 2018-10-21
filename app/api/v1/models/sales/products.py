@@ -59,9 +59,13 @@ class ProductsModel(BaseModel):
         """Method that deletes products"""
         return self.delete_entries()
 
-    def update_products(self, prod_id, **kwargs):
+    def update_products(self,
+        prod_id, prod_name, price, quantity, size, category,
+        sub_category):
         """Method that updates categories entries given prod_id"""
-        return self.update_entries(prod_id, kwargs)
+        return self.update_entries(id=prod_id, prod_name=prod_name,
+            price=price, quantity=quantity,
+            size=size, category=category, sub_category=sub_category)
 
     def update_product_qty(self, p_id, new_qty):
         """Method that update entries of a data structure"""

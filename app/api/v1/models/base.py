@@ -58,17 +58,17 @@ class BaseModel(ModelResponses):
             row_data = self.does_not_exist_response(k)
         return row_data
 
-    def update_entries(self, entry_id, **kwargs):
+    def update_entries(self, **kwargs):
         """Method that update entries of a data structure"""
-        dt_row = [row for row in self.dt_name if row["id"] == entry_id]
+        dt_row = [row for row in self.dt_name if row["id"] == kwargs["id"]]
         if not dt_row:
-            self.response = self.does_not_exist_response(entry_id)
+            self.response = self.does_not_exist_response(kwargs["id"])
         # common keys lookup
         match = kwargs.keys() & dt_row[0].keys()
         if match:
             for k in match:
                 dt_row[0][k] = kwargs[k]
-            self.response = self.update_response(entry_id)
+            self.response = self.update_response(kwargs["id"])
         return self.response
 
     def delete_entries(self, *args):
@@ -88,15 +88,16 @@ class BaseModel(ModelResponses):
                 entry_index = lambda: self.dt_name.index(dt_row[0])
                 poped_item = self.dt_name.pop(entry_index())
                 deleted_entries.append(poped_item)
-                self.response = self.delete_response(deleted_entries)
+            self.response = self.delete_response(deleted_entries)
         # for more ke_ids more than existing
-        un_exist_id = list(entry_set - match)
-        deleted_entries = []
-        for k in match:
-            dt_row = [row for row in self.dt_name if row["id"] == k] # returns entry with key k
-            entry_index = lambda: self.dt_name.index(dt_row[0])
-            poped_item = self.dt_name.pop(entry_index())
-            deleted_entries.append(poped_item)
+        else:
+            un_exist_id = list(entry_set - match)
+            deleted_entries = []
+            for k in match:
+                dt_row = [row for row in self.dt_name if row["id"] == k] # returns entry with key k
+                entry_index = lambda: self.dt_name.index(dt_row[0])
+                poped_item = self.dt_name.pop(entry_index())
+                deleted_entries.append(poped_item)
             self.response = self.delete_unexist_response(deleted_entries, un_exist_id)
         return self.response
 
