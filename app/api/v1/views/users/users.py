@@ -37,6 +37,20 @@ class Initializer:
 class Users(Resource, Initializer):
     """Class that creates and ruturn users"""
     @jwt_required
+    def get(self):
+        """Method that get users"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            user_role_name = self.auth.return_role_name(user_id)
+            if user_role_name == "store_owner":
+                self.response = self.user.get_users()
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response       
+
+    @jwt_required
     def post(self):
         """Method that creates users"""
         if get_jwt_identity():
