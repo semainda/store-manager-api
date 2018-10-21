@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 # local imports
 from app.api.v1.auth.user_auth import UserAuth
 from app.api.v1.models.users.roles import RoleModel
+from app.api.v1.models.users.user_roles import UserRoleModel
 from app.api.v1.responses.auth.base import AuthResponses
 from app.api.v1.responses.validators.base import ValidatorsResponse
 from app.api.v1.utils.validators import input_validators
@@ -22,6 +23,7 @@ class Initializer:
         self.auth = UserAuth()
         self.resp = AuthResponses()
         self.role = RoleModel()
+        self.user_role = UserRoleModel()
         self.validator = ValidatorsResponse()
         self.response = ""
 
@@ -73,6 +75,31 @@ class RolesActivity(Resource, Initializer):
             user_role_name = self.auth.return_role_name(get_jwt_identity())
             if user_role_name == "store_owner":
                 self.response = self.role.get_role(role_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+
+    @jwt_required
+    def delete(self, role_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_role_name = self.auth.return_role_name(get_jwt_identity())
+            if user_role_name == "store_owner":
+                role = self.role.get_entry_by_any_field("id", role_id)
+                if role:
+                    user_role = self.user_role.get_entry_by_any_field(
+                        "role_id", role_id)
+                    if user_role:
+                        self.response = {
+                            "Message": 
+                            "This role has already being assigned to users."
+                            "To delete it, revoke it from users"}, 400
+                    else:
+                        self.response = self.role.delete_roles(role_id)
+                else:
+                    self.response = self.role.get_role(role_id)
             else:
                 self.response = self.resp.forbidden_user_access_response()
         else:
