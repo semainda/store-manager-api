@@ -16,7 +16,6 @@ from app.api.v1.responses.auth.base import AuthResponses
 from app.api.v1.responses.validators.base import ValidatorsResponse
 from app.api.v1.utils.validators import input_validators
 
-
 PARSER = reqparse.RequestParser()
 PARSER.add_argument(
     "prod_id", required=True, type=int, help="Key prod_id not found")
@@ -88,7 +87,7 @@ class Sales(Resource, Initializer):
         if get_jwt_identity():
             user_id = get_jwt_identity()
             user_role_name = self.auth.return_role_name(user_id)
-            if user_role_name in "store_attendant":
+            if user_role_name in ("store_owner", "store_attendant"):
                 data_parsed = PARSER.parse_args()
                 prod_id = data_parsed["prod_id"]
                 quantity = data_parsed["quantity"]
@@ -121,3 +120,44 @@ class Sales(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
+
+
+class SalesActivity(Resource, Initializer):
+    """Class that defines methods for specific sale order"""
+    @jwt_required
+    def get(self, sale_id):
+        """Method that returns a specific sale order"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            user_role_name = self.auth.return_role_name(user_id)
+            if user_role_name == "store_owner":
+                is_valid = input_validators(sale_id=sale_id)
+                if is_valid[0]:
+                    sale = self.sale.get_sale_by_field("id", sale_id)
+                if sale:
+                    #returns users dict list
+                    user = self.user.get_user_by_field("id", user_id)
+                    # returns sold products dict list
+                    sold_products = self.sold.get_sold_products()
+                    sales_details = {
+                        "Sale Detail Report":
+                        {user["first_name"].title() + " " +
+                        user["last_name"].title() + " Sale Orders": [
+                            dict(Product=product["prod_name"],
+                                Qty=product["quantity"],
+                                Unit_price=product["price"],
+                                Total_price=product["total"],
+                                Sales_data=sale["sale_date"]
+                            ) for product in sold_products
+                                if product["sale_id"] == sale["id"]]
+                        }
+                    }
+                    self.response = sales_details
+                else:
+                    self.response = self.sale.get_sale(sale_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+

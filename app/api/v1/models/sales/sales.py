@@ -42,6 +42,11 @@ class SalesModel(BaseModel):
     def get_sales_entries(self):
         """Method that return sales"""
         return self.sales
+    
+    def get_entry_by_any_field(self, k, v):
+        """Method that check for a given field and returns it"""
+        dt_row = [row for row in self.sales if row[k] == v]
+        return dt_row[0]
 
     def create_sales(self, user_id, sale_date):
         """Method that creates sales"""
