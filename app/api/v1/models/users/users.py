@@ -52,6 +52,9 @@ class UserModel(BaseModel):
         """Method that deletes users"""
         return self.delete_entries()
 
-    def update_roles(self, user_id, **kwargs):
+    def update_users(self, user_id, first_name, last_name, email, user_name, password):
         """Method that updates users entries given user_id"""
-        return self.update_entries(user_id, kwargs)
+        return self.update_entries(
+            id=user_id, first_name=first_name,
+            last_name=last_name, email=email,
+            user_name=user_name, password=password)

@@ -83,4 +83,60 @@ class Users(Resource, Initializer):
 
 class UsersActivity(Resource, Initializer):
     """Class that handels endpoints that requires unique ids"""
-    pass
+    @jwt_required
+    def get(self, user_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_role_name = self.auth.return_role_name(get_jwt_identity())
+            if user_role_name == "store_owner":
+                self.response = self.user.get_user(user_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+
+    @jwt_required
+    def put(self):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            if user_id:
+                PARSER.add_argument(
+                    "password", required=True, type=str, help="Key password not found")
+                data_parsed = PARSER.parse_args()
+                first_name = data_parsed["first_name"].lower()
+                last_name = data_parsed["last_name"].lower()
+                email = data_parsed["email"].lower()
+                user_name = data_parsed["user_name"].lower()
+                password = hash256.hash(data_parsed["password"])
+                is_valid = input_validators(
+                    first_name=first_name, last_name=last_name,
+                    user_name=user_name)
+                if is_valid[0]:
+                    self.response = self.user.update_users(
+                        user_id, first_name, last_name, email, user_name, password)
+                else:
+                    self.response = self.validator.invalid_contents_response(
+                        is_valid[1])
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+
+
+class UserProfile(Resource, Initializer):
+    """Method that returns ones profile details"""
+    @jwt_required
+    def get(self):
+        """Method that return a profile"""
+        if get_jwt_identity():
+            user_id = get_jwt_identity()
+            if user_id:
+                self.response = self.user.get_user(user_id)
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

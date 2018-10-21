@@ -10,7 +10,7 @@ from .db_config.db_setups import DataStuctures
 
 # api endpoints imports
 from .api.v1.views.users.login import Login
-from .api.v1.views.users.users import Users
+from .api.v1.views.users.users import Users, UsersActivity, UserProfile
 from .api.v1.views.users.roles import Roles, RolesActivity
 from .api.v1.views.sales.products import Products, ProductsActivity
 from .api.v1.views.sales.sales import Sales, SalesActivity
@@ -53,7 +53,7 @@ API.add_resource(ProductsActivity, "/products/<int:prod_id>")
 API.add_resource(Sales, "/sales")
 API.add_resource(SalesActivity, "/sales/<int:sale_id>")
 API.add_resource(SalesSummaryActivity, "/sales/mysales")
-
+API.add_resource(UserProfile, "/users/myprofile")
 
 ######################################################
 #           Store Owner Endpoints                    #
@@ -62,5 +62,6 @@ API.add_resource(SalesSummaryActivity, "/sales/mysales")
 API.add_resource(Roles, "/roles")
 API.add_resource(RolesActivity, "/roles/<int:role_id>")
 API.add_resource(Users, "/users")
+API.add_resource(UsersActivity, "/users/<int:user_id>")
 API.add_resource(SalesSummary, "/sales/summary")
 API.add_resource(UserSalesSummary, "/sales/summary/<int:user_id>")
