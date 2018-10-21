@@ -39,9 +39,7 @@ class Initializer:
 
 class Sales(Resource, Initializer):
     """Class that creates and ruturn sales"""
-    def __init__(self):
-        super().__init__()
-    
+
     @jwt_required
     def get(self):
         """Method that return products"""
@@ -87,7 +85,7 @@ class Sales(Resource, Initializer):
         if get_jwt_identity():
             user_id = get_jwt_identity()
             user_role_name = self.auth.return_role_name(user_id)
-            if user_role_name in ("store_owner", "store_attendant"):
+            if user_role_name == "store_attendant":
                 data_parsed = PARSER.parse_args()
                 prod_id = data_parsed["prod_id"]
                 quantity = data_parsed["quantity"]
@@ -130,7 +128,7 @@ class SalesActivity(Resource, Initializer):
         if get_jwt_identity():
             user_id = get_jwt_identity()
             user_role_name = self.auth.return_role_name(user_id)
-            if user_role_name == "store_owner":
+            if user_role_name in ("store_owner", "store_attendant"):
                 is_valid = input_validators(sale_id=sale_id)
                 if is_valid[0]:
                     sale = self.sale.get_sale_by_field("id", sale_id)
@@ -160,4 +158,3 @@ class SalesActivity(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
-

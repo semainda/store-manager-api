@@ -13,6 +13,7 @@ from .api.v1.views.users.login import Login
 from .api.v1.views.users.roles import Roles 
 from .api.v1.views.sales.products import Products, ProductsActivity
 from .api.v1.views.sales.sales import Sales, SalesActivity
+from .api.v1.views.sales.sales_summary import SalesSummary, SalesSummaryActivity, UserSalesSummary
 
 # blueprint object
 API_V1_BLUEPRINT = Blueprint("v1", __name__, url_prefix="/api/v1")
@@ -49,9 +50,13 @@ API.add_resource(Products, "/products")
 API.add_resource(ProductsActivity, "/products/<int:prod_id>")
 API.add_resource(Sales, "/sales")
 API.add_resource(SalesActivity, "/sales/<int:sale_id>")
+API.add_resource(SalesSummaryActivity, "/sales/mysales")
+
 
 ######################################################
 #           Store Owner Endpoints                    #
 ######################################################
 
 API.add_resource(Roles, "/roles")
+API.add_resource(SalesSummary, "/sales/summary")
+API.add_resource(UserSalesSummary, "/sales/summary/<int:user_id>")
