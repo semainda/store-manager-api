@@ -21,9 +21,13 @@ class BaseModel(ModelResponses):
             for data in self.dt_name:
                 match = kwargs.items() & data.items()
                 if match:
-                    exist_values = [dict(match)]
-                    self.response = self.already_exist_response(exist_values)
-                    break
+                    match_dict = dict(match)
+                    if match_dict["created_at"]:
+                        continue
+                    else:
+                        exist_values = [match_dict]
+                        self.response = self.already_exist_response(exist_values)
+                        break
                 # _, val = items
                 #exist_values.append(val)
             else:
