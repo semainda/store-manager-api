@@ -58,7 +58,8 @@ class Roles(Resource, Initializer):
                 if is_valid[0]:
                     self.response = self.role.create_roles(role_name)
                 else:
-                    self.response = self.validator.invalid_contents_response(is_valid[1])
+                    self.response = self.validator.invalid_contents_response(
+                        is_valid[1])
             else:
                 self.response = self.resp.forbidden_user_access_response()
         else:
@@ -122,7 +123,8 @@ class RolesActivity(Resource, Initializer):
                     else:
                         self.response = self.role.get_role(role_id)
                 else:
-                    self.response = self.validator.invalid_contents_response(is_valid[1])
+                    self.response = self.validator.invalid_contents_response(
+                        is_valid[1])
             else:
                 self.response = self.resp.forbidden_user_access_response()
         else:

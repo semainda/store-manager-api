@@ -80,7 +80,8 @@ class BaseModel(ModelResponses):
         if match == entry_set:
             deleted_entries = []
             for k in match:
-                dt_row = [row for row in self.dt_name if row["id"] == k] # returns entry with key k
+                # returns entry with key k
+                dt_row = [row for row in self.dt_name if row["id"] == k]
                 entry_index = lambda: self.dt_name.index(dt_row[0])
                 poped_item = self.dt_name.pop(entry_index())
                 deleted_entries.append(poped_item)
@@ -90,11 +91,13 @@ class BaseModel(ModelResponses):
             un_exist_id = list(entry_set - match)
             deleted_entries = []
             for k in match:
-                dt_row = [row for row in self.dt_name if row["id"] == k] # returns entry with key k
+                # returns entry with key k
+                dt_row = [row for row in self.dt_name if row["id"] == k]
                 entry_index = lambda: self.dt_name.index(dt_row[0])
                 poped_item = self.dt_name.pop(entry_index())
                 deleted_entries.append(poped_item)
-            self.response = self.delete_unexist_response(deleted_entries, un_exist_id)
+            self.response = self.delete_unexist_response(
+                deleted_entries, un_exist_id)
         return self.response
 
     # sales specific methods that requires responses

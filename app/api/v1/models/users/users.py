@@ -36,7 +36,8 @@ class UserModel(BaseModel):
         """Method that creates users"""
         user_id = len(self.users) + 1
         return self.insert_entries(
-            {"user_name": user_name, "email": email}, id=user_id, first_name=first_name,
+            {"user_name": user_name, "email": email},
+            id=user_id, first_name=first_name,
             last_name=last_name, email=email,
             user_name=user_name, password=password, created_at=created_at)
 
@@ -60,7 +61,8 @@ class UserModel(BaseModel):
         """Method that deletes users"""
         return self.delete_entries()
 
-    def update_users(self, user_id, first_name, last_name, email, user_name, password):
+    def update_users(
+        self, user_id, first_name, last_name, email, user_name, password):
         """Method that updates users entries given user_id"""
         return self.update_entries(
             id=user_id, first_name=first_name,

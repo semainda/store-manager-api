@@ -106,11 +106,14 @@ class UserRolesActivity(Resource, Initializer):
                 role_id = data_parsed["role_id"]
                 is_valid = input_validators(role_id=role_id)
                 if is_valid[0]:
-                    user_role = self.user_role.get_entry_by_any_field("id", user_role_id)
+                    user_role = self.user_role.get_entry_by_any_field(
+                        "id", user_role_id)
                     if user_role:
-                        self.response = self.user_role.update_user_roles(user_role_id, role_id)
+                        self.response = self.user_role.update_user_roles(
+                            user_role_id, role_id)
                     else:
-                        self.response = self.user_role.get_user_role(user_role_id)
+                        self.response = self.user_role.get_user_role(
+                            user_role_id)
                 else:
                     self.response = self.validator.invalid_contents_response(
                         is_valid[1])

@@ -14,6 +14,7 @@ from .api.v1.views.users.users import Users, UsersActivity, UserProfile
 from .api.v1.views.users.roles import Roles, RolesActivity
 from .api.v1.views.users.users_roles import UserRoles, UserRolesActivity
 from .api.v1.views.sales.categories import Categories, CategoriesActivity
+from .api.v1.views.sales.sub_categories import SubCategories, SubCategoriesActivity
 from .api.v1.views.sales.products import Products, ProductsActivity
 from .api.v1.views.sales.sales import Sales, SalesActivity
 from .api.v1.views.sales.sales_summary import SalesSummary,\
@@ -71,3 +72,5 @@ API.add_resource(SalesSummary, "/sales/summary")
 API.add_resource(UserSalesSummary, "/sales/summary/<int:user_id>")
 API.add_resource(Categories, "/categories")
 API.add_resource(CategoriesActivity, "/categories/<int:cat_id>")
+API.add_resource(SubCategories, "/subcategories")
+API.add_resource(SubCategoriesActivity, "/subcategories/<int:sub_cat_id>")
