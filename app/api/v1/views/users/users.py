@@ -63,7 +63,7 @@ class Users(Resource, Initializer):
                 email = data_parsed["email"].lower()
                 user_name = data_parsed["user_name"].lower()
                 password = hash256.hash(last_name)
-                created_at = datetime.now().strftime("%Y-%m-%d")
+                created_at = datetime.now().strftime("%c")
                 is_valid = input_validators(
                     first_name=first_name, last_name=last_name,
                     user_name=user_name)

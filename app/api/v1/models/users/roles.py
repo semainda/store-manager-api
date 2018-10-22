@@ -29,7 +29,8 @@ class RoleModel(BaseModel):
     def create_roles(self, role_name):
         """Method that creates roles"""
         role_id = len(self.roles) + 1
-        return self.insert_entries(id=role_id, role_name=role_name)
+        return self.insert_entries(
+            {"role_name": role_name}, id=role_id, role_name=role_name)
 
     def get_role_by_field(self, key, value):
         """Method that returns roles entries by any field"""

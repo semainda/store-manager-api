@@ -10,29 +10,21 @@ class BaseModel(ModelResponses):
         self.dt_name = dt_name
         self.response = ""
 
-    def insert_entries(self, **kwargs):
+    def insert_entries(self, unique_entries_dict=None, **kwargs):
         """Method that append entries to a given data structure"""
-        # new_entry = [row for row in kwargs]
-        if not self.dt_name:
+        if not unique_entries_dict:
             self.dt_name.extend([kwargs])
-            self.response = self.create_response([kwargs])
+            self.response = self.create_response(kwargs["id"])
         else:
-            # common k, v lookup
             for data in self.dt_name:
-                match = kwargs.items() & data.items()
+                match = unique_entries_dict.items() & data.items()
                 if match:
-                    match_dict = dict(match)
-                    if match_dict["created_at"]:
-                        continue
-                    else:
-                        exist_values = [match_dict]
-                        self.response = self.already_exist_response(exist_values)
-                        break
-                # _, val = items
-                #exist_values.append(val)
+                    exist_values = [dict(match)]
+                    self.response = self.already_exist_response(exist_values)
+                    break
             else:
                 self.dt_name.extend([kwargs])
-                self.response = self.create_response([kwargs])
+                self.response = self.create_response(kwargs["id"])     
         return self.response
 
     def get_entry(self, entry_id):

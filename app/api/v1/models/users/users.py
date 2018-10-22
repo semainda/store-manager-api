@@ -22,13 +22,21 @@ class UserModel(BaseModel):
         self.users = DataStuctures().datastructures()[1]
         super().__init__(self.users, "users")
 
+    # Method overide
+    def get_entry_by_any_field(self, k, v):
+        """Method that check for a given field and returns it"""
+        dt_row = [row for row in self.users if row[k] == v]
+        if dt_row:
+            return dt_row[0]
+        return dt_row
+
     def create_users(self,
                     first_name, last_name,
                     email, user_name, password, created_at):
         """Method that creates users"""
         user_id = len(self.users) + 1
         return self.insert_entries(
-            id=user_id, first_name=first_name,
+            {"user_name": user_name, "email": email}, id=user_id, first_name=first_name,
             last_name=last_name, email=email,
             user_name=user_name, password=password, created_at=created_at)
 

@@ -45,7 +45,7 @@ class DataStuctures:
 
     def create_default_admin(self, *args):
         """Method that creates default store admin"""
-        created_at = datetime.now().strftime("%Y-%m-%d")
+        created_at = datetime.now().strftime("%c")
         data = args[0]
         self.roles.append(
             dict(
@@ -66,6 +66,7 @@ class DataStuctures:
             )
         self.user_roles.append(
             dict(
+                id=1,
                 user_id=self.users[0]["id"],
                 role_id=self.roles[0]["id"])
             )

@@ -27,9 +27,12 @@ class UserRoleModel(BaseModel):
             return dt_row[0]
         return dt_row
 
-    def create_user_roles(self, *args):
+    def create_user_roles(self, role_id, user_id):
         """Method that creates user_roles"""
-        return self.insert_entries(args)
+        user_role_id = len(self.user_roles) + 1
+        return self.insert_entries(
+            {"user_id": user_id},
+            id=user_role_id, role_id=role_id, user_id=user_id)
 
     def get_user_role_by_field(self, key, value):
         """Method that returns user_roles entries by any field"""
@@ -38,10 +41,10 @@ class UserRoleModel(BaseModel):
     def get_user_role(self, user_role_id):
         """Method that returns specific user_role given user_role_id"""
         return self.get_entry(user_role_id)
-    
-    def get_role_user(self, user_id):
-        """Method that returns specific user_role given user_id"""
-        return self.get_entry(user_id)
+
+    """def get_role_user(self, user_id):
+        Method that returns specific user_role given user_id
+        return self.get_entry(user_id)"""
 
     def get_user_roles(self):
         """Method that returns user_roles"""
@@ -51,6 +54,6 @@ class UserRoleModel(BaseModel):
         """Method that deletes user_roles"""
         return self.delete_entries()
 
-    def update_user_roles(self, user_role_id, **kwargs):
+    def update_user_roles(self, user_role_id, role_id):
         """Method that updates user_roles entries given user_role_id"""
-        return self.update_entries(user_role_id, kwargs)
+        return self.update_entries(id=user_role_id, role_id=role_id)
