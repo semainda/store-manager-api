@@ -62,7 +62,7 @@ class Products(Resource, Initializer):
 
     @jwt_required
     def post(self):
-        """Method that creates roles"""
+        """Method that creates products"""
         if get_jwt_identity():
             user_role_name = self.auth.return_role_name(get_jwt_identity())
             if user_role_name in ("store_owner", "store_attendant"):
@@ -86,6 +86,11 @@ class Products(Resource, Initializer):
                                 self.response = self.product.create_products(
                                     prod_name, price, quantity, size,
                                     cat_id, sub_cat_id)
+                            else:
+                                self.response = {
+                                    "Message":
+                                    "Product category and it's sub_category are not related"
+                                    }, 400
                         else:
                             self.response = self.sub.get_sub_category(
                                 sub_cat_id)
