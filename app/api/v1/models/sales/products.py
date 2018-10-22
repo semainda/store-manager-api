@@ -39,7 +39,7 @@ class ProductsModel(BaseModel):
         """Method that creates products"""
         prod_id = len(self.products) + 1
         return self.insert_entries(
-            id=prod_id, prod_name=prod_name,
+            {"prod_name": prod_name}, id=prod_id, prod_name=prod_name,
             price=price, quantity=quantity,
             size=size, category=category, sub_category=sub_category)
 
