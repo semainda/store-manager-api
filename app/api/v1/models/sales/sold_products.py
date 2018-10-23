@@ -44,11 +44,3 @@ class SoldProductsModel(BaseModel):
     def get_sold_products(self):
         """Method that returns sold_products"""
         return self.get_entries()
-
-    def delete_sold_products(self):
-        """Method that deletes sold_products"""
-        return self.delete_entries()
-
-    def update_sales(self, sold_prod_id, **kwargs):
-        """Method that updates sold_products entries given sold_prod_id"""
-        return self.update_entries(sold_prod_id, kwargs)

@@ -33,7 +33,7 @@ class Initializer:
         self.sale = SalesModel()
         self.sold = SoldProductsModel()
         self.validator = ValidatorsResponse()
-        self.sale_date = datetime.now().strftime("%Y-%m-%d")
+        self.sale_date = datetime.now().strftime("%c")
         self.response = ""
 
 
@@ -67,7 +67,7 @@ class Sales(Resource, Initializer):
                                 if sale["user_id"] == user["id"]
                                     for product in sold_products
                                         if product["sale_id"] == sale["id"]]
-                                            for user in users
+                                            for user in users for user_sale in sales if user["id"] == user_sale["user_id"]
                         }
                     }
                     self.response = sales_details
@@ -134,7 +134,7 @@ class SalesActivity(Resource, Initializer):
                     sale = self.sale.get_sale_by_field("id", sale_id)
                 if sale:
                     #returns users dict list
-                    user = self.user.get_user_by_field("id", user_id)
+                    user = self.user.get_user_by_field("id", sale["user_id"])
                     # returns sold products dict list
                     sold_products = self.sold.get_sold_products()
                     sales_details = {

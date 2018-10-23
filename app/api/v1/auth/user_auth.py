@@ -28,8 +28,16 @@ class UserAuth:
 
     def return_role_name(self, user_id):
         """Method that returns logged in user role_name"""
+        response = ""
         role_id = [row for row in self.user_roles if row["user_id"] == user_id]
-        role_name = [
-            row for row in self.roles if row["id"] == role_id[0]["role_id"]
-            ]
-        return role_name[0]["role_name"]
+        if role_id:
+            role_name = [
+                row for row in self.roles if row["id"] == role_id[0]["role_id"]
+                ]
+            if role_name:
+                response = role_name[0]["role_name"]
+            else:
+                response = role_name
+        else:
+            response = role_id 
+        return response

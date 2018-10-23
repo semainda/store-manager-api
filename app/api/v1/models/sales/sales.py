@@ -21,16 +21,16 @@ class SalesModel(BaseModel):
     
     # Method overide: insert_entries
 
-    def insert_entries(self, **kwargs):
+    def insert_entries(self, unique_entries_dict, **kwargs):
         """Method that overides to do something else"""
         sale_id = ""
         if not self.sales:
             self.sales.extend([kwargs])
-            sale_id = kwargs["user_id"]
+            sale_id = kwargs["id"]
         else:
             # common k, v lookup
             for data in self.sales:
-                match = kwargs.items() & data.items()
+                match = unique_entries_dict.items() & data.items()
                 if match:
                     sale_id = kwargs["id"] - 1
                     break
@@ -46,12 +46,15 @@ class SalesModel(BaseModel):
     def get_entry_by_any_field(self, k, v):
         """Method that check for a given field and returns it"""
         dt_row = [row for row in self.sales if row[k] == v]
-        return dt_row[0]
+        if dt_row:
+            return dt_row[0]
+        return dt_row
 
     def create_sales(self, user_id, sale_date):
         """Method that creates sales"""
         sale_id = len(self.sales) + 1
         return self.insert_entries(
+            {"user_id": user_id},
             id=sale_id, user_id=user_id, sale_date=sale_date)
 
     def get_sale_by_field(self, key, value):

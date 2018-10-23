@@ -145,7 +145,7 @@ class SalesSummaryActivity(Resource, Initializer):
         if get_jwt_identity():
             user_id = get_jwt_identity()
             user_role_name = self.auth.return_role_name(user_id)
-            if user_role_name == "store_owner":
+            if user_role_name == "store_attendant":
                 sale = self.sale.get_sale_by_field("user_id", user_id)
                 if sale:
                     #returns users dict list

@@ -21,7 +21,7 @@ PARSER.add_argument(
 PARSER.add_argument(
     "quantity", required=True, type=int, help="Key quantity not found")
 PARSER.add_argument(
-    "size", required=True, type=str, help="Key size not found")
+    "size", required=True, type=int, help="Key size not found")
 PARSER.add_argument(
     "cat_id", required=True, type=int, help="Key cat_id not found")
 PARSER.add_argument(
@@ -70,7 +70,7 @@ class Products(Resource, Initializer):
                 prod_name = data_parsed["prod_name"].lower()
                 price = data_parsed["price"]
                 quantity = data_parsed["quantity"]
-                size = data_parsed["size"].lower()
+                size = data_parsed["size"]
                 cat_id = data_parsed["cat_id"]
                 sub_cat_id = data_parsed["sub_cat_id"]
                 is_valid = input_validators(
@@ -82,15 +82,15 @@ class Products(Resource, Initializer):
                         sub_category = self.sub.get_entry_by_any_field(
                             "id", sub_cat_id)
                         if sub_category:
-                            if category[cat_id] == sub_category[cat_id]:
+                            # if category["cat_id"] == sub_category["cat_id"]:
                                 self.response = self.product.create_products(
                                     prod_name, price, quantity, size,
                                     cat_id, sub_cat_id)
-                            else:
-                                self.response = {
-                                    "Message":
-                                    "Product category and it's sub_category are not related"
-                                    }, 400
+                            # else:
+                                # self.response = {
+                                   #  "Message":
+                                    # "Product category and it's sub_category are not related"
+                                    # }, 400
                         else:
                             self.response = self.sub.get_sub_category(
                                 sub_cat_id)

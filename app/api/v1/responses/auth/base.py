@@ -6,7 +6,10 @@ class AuthResponses:
     def forbidden_user_access_response(self):
         """Method that returns unauthorized response"""
         return {
-            "Message": "Your not authorized to access this resource"
+            "Message":
+            "Your not authorized to access this resource. "
+            "Make sure you have assigned the required role "
+            "to access this resource"
             }, 403
 
     def unauthorized_user_access_responses(self):

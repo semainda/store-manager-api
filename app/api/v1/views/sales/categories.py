@@ -88,7 +88,7 @@ class CategoriesActivity(Resource, Initializer):
             user_role_name = self.auth.return_role_name(get_jwt_identity())
             if user_role_name == "store_owner":
                 data_parsed = PARSER.parse_args()
-                cat_name = data_parsed["cat_name"]
+                cat_name = data_parsed["cat_name"].lower()
                 is_valid = input_validators(cat_name=cat_name)
                 if is_valid[0]:
                     category = self.cat.get_entry_by_any_field("id", cat_id)
