@@ -7,6 +7,8 @@ API for Store Manager web application that helps store owners manage sales and p
 [![Build Status](https://travis-ci.com/semainda/store-manager-api.svg?branch=store-manager-challenge2)](https://travis-ci.com/semainda/store-manager-api)
 [![codecov](https://codecov.io/gh/semainda/store-manager-api/branch/store-manager-challenge2/graph/badge.svg)](https://codecov.io/gh/semainda/store-manager-api)
 [![Coverage Status](https://coveralls.io/repos/github/semainda/store-manager-api/badge.svg?branch=store-manager-challenge2)](https://coveralls.io/github/semainda/store-manager-api?branch=store-manager-challenge2)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Features Included
 
