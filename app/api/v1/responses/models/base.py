@@ -27,10 +27,10 @@ class ModelResponses:
                 self.name, dt_key)
             }, 404
 
-    def create_response(self, name):
+    def create_response(self):
         """Method that returns created response"""
         return {
-            "Message": "{} with ID = '{}' Created successful".format(self.name, name)
+            "Message": "{} created successful".format(self.name)
             }, 201
 
     def creates_response(self):
@@ -40,11 +40,11 @@ class ModelResponses:
                 self.names)
             }, 201
 
-    def already_exist_response(self, values):
+    def already_exist_response(self):
         """Method that returns exist response """
         return {
-            "Message": "{} with value(s) '{}' already exists".format(
-                self.name, values)
+            "Message": "{} already exists".format(
+                self.name)
             }, 409
 
     def update_response(self, dt_id):
@@ -54,11 +54,11 @@ class ModelResponses:
                 self.name, dt_id)
             }, 201
 
-    def delete_response(self, values):
+    def delete_response(self):
         """Method that returns delete response"""
         return {
-            "Message": "{} details '{}' deleted successful".format(
-                self.name, values)
+            "Message": "{} deleted successful".format(
+                self.name)
             }, 200
 
     def delete_unexist_response(self, values, dt_id):

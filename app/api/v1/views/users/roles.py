@@ -96,7 +96,7 @@ class RolesActivity(Resource, Initializer):
                         self.response = {
                             "Message": 
                             "This role has already being assigned to users."
-                            "To delete it, revoke it from users"}, 400
+                            "To delete it, revoke it from users"}, 200
                     else:
                         self.response = self.role.delete_roles(role_id)
                 else:
@@ -119,7 +119,13 @@ class RolesActivity(Resource, Initializer):
                 if is_valid[0]:
                     role = self.role.get_entry_by_any_field("id", role_id)
                     if role:
-                        self.response = self.role.update_roles(role_id, role_name)
+                        if role["role_name"] != "store_owner":
+                            self.response = self.role.update_roles(
+                                role_id, role_name)
+                        else:
+                            self.response = {
+                                "Message": "Store owner role can't be updated"
+                                }, 403
                     else:
                         self.response = self.role.get_role(role_id)
                 else:

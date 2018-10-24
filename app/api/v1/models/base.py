@@ -14,17 +14,17 @@ class BaseModel(ModelResponses):
         """Method that append entries to a given data structure"""
         if not unique_entries_dict:
             self.dt_name.extend([kwargs])
-            self.response = self.create_response(kwargs["id"])
+            self.response = self.create_response()
         else:
             for data in self.dt_name:
                 match = unique_entries_dict.items() & data.items()
                 if match:
-                    exist_values = [dict(match)]
-                    self.response = self.already_exist_response(exist_values)
+                    # exist_values = [dict(match)]
+                    self.response = self.already_exist_response()
                     break
             else:
                 self.dt_name.extend([kwargs])
-                self.response = self.create_response(kwargs["id"])     
+                self.response = self.create_response()     
         return self.response
 
     def get_entry(self, entry_id):
@@ -85,7 +85,7 @@ class BaseModel(ModelResponses):
                 entry_index = lambda: self.dt_name.index(dt_row[0])
                 poped_item = self.dt_name.pop(entry_index())
                 deleted_entries.append(poped_item)
-            self.response = self.delete_response(deleted_entries)
+            self.response = self.delete_response()
         # for more ke_ids more than existing
         else:
             un_exist_id = list(entry_set - match)
@@ -113,5 +113,5 @@ class BaseModel(ModelResponses):
     def insert_sales(self, **kwargs):
         """Method that append entries to a given data structure"""
         self.dt_name.extend([kwargs])
-        self.response = self.create_response([kwargs])
+        self.response = self.create_response()
         return self.response
