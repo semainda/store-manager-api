@@ -90,6 +90,8 @@ DEL  | /roles/role_id | Delete a specific role
 
 ## Users Roles API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 POST |  /users/roles | Assign a role to an attendant
 GET  | /users/roles  | Get users with assigned roles
 GET  | /users/roles/user_role_id | Get a specific user role
@@ -97,6 +99,8 @@ PUT  | /users/roles/user_role_id | Update a specific user role
 
 ## Product Categories API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 POST | /categories | Register a new product category
 GET  | /categories | Get all products categories
 GET  | /categories/cat_id | Get a specific products category
@@ -104,6 +108,8 @@ PUT  | /categories/cat_id | Update a specific product category
 
 ## Product Sub-Categories API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 POST | /subcategories | Register a new product subcategory
 GET  | /subcategories | Get all products subcategories
 GET  | /subcategories/sub_id | Get a specific products subcategory
@@ -111,12 +117,16 @@ PUT  | /subcategories/sub_id | Update a specific product subcategory
 
 ## Products API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 POST | /products | Register a new product
 GET  | /products | Get all products
 GET  | /products/prod_id | Get a specific products
 
 ## Sales API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 POST | /sales | Register a new sale order
 GET  | /sales | Get all sales orders
 GET  | /sales/mysales | Get attendant all sales orders
@@ -124,5 +134,7 @@ GET  | /sales/sale_id | Get a specific sale order
 
 ## Sales Summary API - Endpoints: /api/v1/
 
+Method | Endpoint | Functionality
+----| ---- | ---
 GET  | /sales/summary | Get all sales summary
 GET  | /sales/sale_id | Get a specific sale summary

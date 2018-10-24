@@ -1,6 +1,9 @@
 language: python
 env:
   ENV_CONFIG="testing"
+  ADMIN_CONFIG='["store_owner", "selemani", "nuru", "semaindas@gmail.com", "semainda", "mk911212"]'
+  JWT_SECRET_KEY="89769112122070328"
+
 
 python:
   - "3.6"
