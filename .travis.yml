@@ -1,0 +1,21 @@
+language: python
+env:
+  ENV_CONFIG="testing"
+  ADMIN_CONFIG='["store_owner", "selemani", "nuru", "semaindas@gmail.com", "semainda", "mk911212"]'
+  JWT_SECRET_KEY="89769112122070328"
+
+
+python:
+  - "3.6"
+
+install:
+  - pip install pipenv
+  - pipenv install
+  - pipenv install coveralls codecov
+
+script:
+  - pytest --cov=app/tests --cov-report=html
+
+after_success:
+  - coveralls
+  - codecov --token=64d68490-a7de-4bea-9b1b-1d52a961e301
