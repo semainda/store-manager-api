@@ -89,3 +89,34 @@ class RolesActivity(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
+
+        
+    @jwt_required
+    def put(self, role_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_ = get_jwt_identity()
+            if user_["role_name"] == "store_owner":
+                data_parsed = PARSER.parse_args()
+                role_name = data_parsed["role_name"].lower()
+                is_valid = input_validators(role_name=role_name)
+                if is_valid[0]:
+                    role = self.role.get_role_by_id(role_id)
+                    if role:
+                        if role_name != "store_owner" and role_id != 1:
+                            self.role.update_role(role_name, role_id)
+                            self.response = self.modresp.update_response(role_id, "Role")
+                        else:
+                            self.response = {
+                                "Message": "Store owner role can't be updated"
+                                }, 403
+                    else:
+                       self.response = self.modresp.does_not_exist_response(role_id, "Role")
+                else:
+                    self.response = self.validator.invalid_contents_response(
+                        is_valid[1])
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
