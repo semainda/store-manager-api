@@ -11,7 +11,7 @@ from .db_config.store_db_setups import DatabaseOperations
 # api endpoints imports
 from .api.v2.views.users.login import Login
 from .api.v2.views.users.users import Users, UsersActivity, UserProfile
-from .api.v2.views.users.roles import Roles
+from .api.v2.views.users.roles import Roles, RolesActivity
 
 
 # blueprint object
@@ -55,3 +55,4 @@ API.add_resource(UserProfile, "/users/myprofile")
 API.add_resource(Users, "/users")
 API.add_resource(UsersActivity, "/users/<int:user_id>")
 API.add_resource(Roles, "/roles")
+API.add_resource(RolesActivity, "/roles/<int:role_id>")
