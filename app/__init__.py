@@ -11,6 +11,7 @@ from .db_config.store_db_setups import DatabaseOperations
 # api endpoints imports
 from .api.v2.views.users.login import Login
 from .api.v2.views.users.users import Users, UsersActivity, UserProfile
+from .api.v2.views.users.roles import Roles
 
 
 # blueprint object
@@ -45,7 +46,7 @@ class StoreManager:
 ######################################################
 
 API.add_resource(Login, "/auth/login")
-API.add_resource(UserProfile, "/users/myprofile"
+API.add_resource(UserProfile, "/users/myprofile")
 
 ######################################################
 #           Store Owner Endpoints                    #
@@ -53,3 +54,4 @@ API.add_resource(UserProfile, "/users/myprofile"
 
 API.add_resource(Users, "/users")
 API.add_resource(UsersActivity, "/users/<int:user_id>")
+API.add_resource(Roles, "/roles")
