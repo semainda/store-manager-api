@@ -84,3 +84,22 @@ class Users(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
+
+class UsersActivity(Resource, Initializer):
+    """Class that handels endpoints that requires unique ids"""
+    @jwt_required
+    def get(self, user_id):
+        """Method that return a specific role"""
+        if get_jwt_identity():
+            user_ = get_jwt_identity()
+            if user_["role_name"] == "store_owner":
+                user = self.user.get_user_by_user_id(user_id)
+                if user:
+                    self.response = self.modresp.exist_response(user, "User")
+                else:
+                    self.response = self.modresp.does_not_exist_response(user_id, "User")
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response

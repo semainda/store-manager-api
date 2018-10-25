@@ -42,10 +42,25 @@ class UserModel(BaseModel):
             users_list.append(accounts)
         return users_list
 
-    def get_user(self, key, user_id):
+    def get_user_by_user_id(self, user_id):
         """Method for get a specific user"""
         sql = "SELECT * FROM users WHERE user_id=%s;"
-        return self.sql_executer(sql, (user_id,))
+        row = self.sql_executer(sql, (user_id,))
+        user_details = []
+        for _, user in enumerate(row):
+            user_id, first_name, last_name,\
+                email, user_name, password, created_at = user
+            account = dict(
+                Id=user_id,
+                First_name=first_name.upper(),
+                Last_name=last_name.upper(),
+                Email=email,
+                User_name=user_name,
+                Password=password,
+                Created_date=str(created_at)
+            )
+            user_details.append(account)
+        return user_details
 
     def get_user_by_user_name_email(self, user_name, email):
         """Method for get a specific user"""
