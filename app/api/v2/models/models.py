@@ -17,6 +17,5 @@ class BaseModel:
             with self.conn.cursor() as curr:
                 curr.execute(sql, sql_value)
                 rows = curr.fetchall()
-        self.conn.close()
         return rows
     

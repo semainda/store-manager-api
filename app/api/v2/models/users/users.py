@@ -12,14 +12,10 @@ class UserModel(BaseModel):
     def create_user(self, first_name, last_name, email, user_name, password):
         """Method that creates user while assignind role user"""
         created_date = datetime.now().strftime("%Y, %m, %d")
-        sql = """WITH users AS(
-            INSERT INTO users(
+        sql = """INSERT INTO users(
                 first_name, last_name,email,
                 user_name, password,
-                created_at) VALUES(%s, %s, %s, %s, %s, %s) RETURNING user_id
-            ), roles AS(SELECT role_id FROM roles WHERE role_name='user')
-            INSERT INTO user_roles(role_id, user_id)
-            SELECT roles.role_id, users.user_id FROM roles, users RETURNING id;"""
+                created_at) VALUES(%s, %s, %s, %s, %s, %s) RETURNING user_id;"""
         return self.sql_executer(
             sql, (
                 first_name, last_name,
