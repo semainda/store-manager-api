@@ -33,6 +33,19 @@ class Initializer:
 class Roles(Resource, Initializer):
     """Class that creates and ruturn roles"""
     @jwt_required
+    def get(self):
+        """Method that return roles"""
+        if get_jwt_identity():
+            user_ = get_jwt_identity()
+            if user_["role_name"] == "store_owner":
+                self.response = self.role.get_all_roles()
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
+
+    @jwt_required
     def post(self):
         """Method that creates roles"""
         if get_jwt_identity():
