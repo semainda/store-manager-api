@@ -10,6 +10,7 @@ from .db_config.store_db_setups import DatabaseOperations
 
 # api endpoints imports
 from .api.v2.views.users.login import Login
+from .api.v2.views.users.users import Users
 
 
 # blueprint object
@@ -44,6 +45,7 @@ class StoreManager:
 ######################################################
 
 API.add_resource(Login, "/auth/login")
+API.add_resource(Users, "/users")
 
 ######################################################
 #           Store Owner Endpoints                    #
