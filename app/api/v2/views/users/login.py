@@ -26,7 +26,6 @@ class Login(Resource):
         data_parsed = PARSER.parse_args()
         user_data = self.user.get_user_password_and_id(
             data_parsed["user_name"])
-        print(user_data)
         if user_data:
             if self.auth.verify_hashed_password(
                     data_parsed["password"], user_data[0][1]):
