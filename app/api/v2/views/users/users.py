@@ -103,3 +103,19 @@ class UsersActivity(Resource, Initializer):
         else:
             self.response = self.resp.unauthorized_user_access_responses()
         return self.response
+
+
+class UserProfile(Resource, Initializer):
+    """Method that returns ones profile details"""
+    @jwt_required
+    def get(self):
+        """Method that return a profile"""
+        if get_jwt_identity():
+            user_ = get_jwt_identity()
+            if user_:
+                self.response = self.user.get_user_by_user_id(user_["user_id"])
+            else:
+                self.response = self.resp.forbidden_user_access_response()
+        else:
+            self.response = self.resp.unauthorized_user_access_responses()
+        return self.response
