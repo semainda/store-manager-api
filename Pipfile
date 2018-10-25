@@ -1,0 +1,24 @@
+[[source]]
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.org/simple"
+
+[requires]
+python_version = "3.6"
+
+[packages]
+flask = "*"
+flask-restful = "*"
+pylint = "*"
+pytest = "*"
+passlib = "*"
+flask-jwt-extended = "*"
+pycodestyle = "*"
+coverage = "*"
+gunicorn = "*"
+codecov = "*"
+pytest-cov = "*"
+termcolor = "*"
+"psycopg2-binary" = "*"
+
+[dev-packages]
