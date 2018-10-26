@@ -1,7 +1,6 @@
 """Module that defines products model"""
 
 # local imports
-# local imports
 from ..models import BaseModel
 
 
