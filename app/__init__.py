@@ -12,7 +12,7 @@ from .db_config.store_db_setups import DatabaseOperations
 from .api.v2.views.users.login import Login
 from .api.v2.views.users.users import Users, UsersActivity, UserProfile
 from .api.v2.views.users.roles import Roles, RolesActivity
-
+from .api.v2.views.sales.categories import Categories, CategoriesActivity
 
 # blueprint object
 API_V2_BLUEPRINT = Blueprint("v1", __name__, url_prefix="/api/v2")
@@ -56,3 +56,5 @@ API.add_resource(Users, "/users")
 API.add_resource(UsersActivity, "/users/<int:user_id>")
 API.add_resource(Roles, "/roles")
 API.add_resource(RolesActivity, "/roles/<int:role_id>")
+API.add_resource(Categories, "/categories")
+API.add_resource(CategoriesActivity, "/categories/<int:cat_id>")
