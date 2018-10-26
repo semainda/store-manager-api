@@ -21,7 +21,7 @@ class SubCategoriesModel(BaseModel):
 
     def get_sub_category_by_id(self, cat_id):
         """Method that returns sub_categories entries by any field"""
-        sql = "SELECT sub_name FROM sub_categories WHERE cat_id=%s;"
+        sql = "SELECT sub_id, sub_name FROM sub_categories WHERE cat_id=%s;"
         return self.sql_executer(sql, (cat_id,))
         
 
