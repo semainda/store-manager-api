@@ -16,6 +16,7 @@ from .api.v2.views.users.users_roles import UserRoles, UserRolesActivity, Update
 from .api.v2.views.sales.categories import Categories, CategoriesActivity
 from .api.v2.views.sales.sub_categories import SubCategories, SubCategoriesActivity
 from .api.v2.views.sales.products import Products, ProductsActivity
+from .api.v2.views.sales.sales import Sales, SalesActivity
 
 # blueprint object
 API_V2_BLUEPRINT = Blueprint("v1", __name__, url_prefix="/api/v2")
@@ -52,6 +53,8 @@ API.add_resource(Login, "/auth/login")
 API.add_resource(UserProfile, "/users/myprofile")
 API.add_resource(Products, "/products")
 API.add_resource(ProductsActivity, "/products/<int:prod_id>")
+API.add_resource(Sales, "/sales")
+API.add_resource(SalesActivity, "/sales/<int:sale_id>")
 
 ######################################################
 #           Store Owner Endpoints                    #
