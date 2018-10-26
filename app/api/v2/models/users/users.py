@@ -93,8 +93,6 @@ class UserModel(BaseModel):
                 WHERE r.role_id=u.role_id AND user_id=%s;"""
         return self.sql_executer(sql, (user_id, ))
     
-    
-
     def delete_user(self, user_id):
         """Method for delete specific user"""
         sql = "DELETE FROM users WHERE user_id=(%s) RETURNING user_id;"

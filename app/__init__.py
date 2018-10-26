@@ -12,6 +12,7 @@ from .db_config.store_db_setups import DatabaseOperations
 from .api.v2.views.users.login import Login
 from .api.v2.views.users.users import Users, UsersActivity, UserProfile
 from .api.v2.views.users.roles import Roles, RolesActivity
+from .api.v2.views.users.users_roles import UserRoles, UserRolesActivity, UpdateUserRole
 from .api.v2.views.sales.categories import Categories, CategoriesActivity
 from .api.v2.views.sales.sub_categories import SubCategories, SubCategoriesActivity
 from .api.v2.views.sales.products import Products, ProductsActivity
@@ -60,6 +61,9 @@ API.add_resource(Users, "/users")
 API.add_resource(UsersActivity, "/users/<int:user_id>")
 API.add_resource(Roles, "/roles")
 API.add_resource(RolesActivity, "/roles/<int:role_id>")
+API.add_resource(UserRoles, "/users/roles")
+API.add_resource(UserRolesActivity, "/users/roles/<int:role_id>")
+API.add_resource(UpdateUserRole, "/users/roles/<int:user_id>")
 API.add_resource(Categories, "/categories")
 API.add_resource(CategoriesActivity, "/categories/<int:cat_id>")
 API.add_resource(SubCategories, "/subcategories")
