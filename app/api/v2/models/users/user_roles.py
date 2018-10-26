@@ -14,28 +14,29 @@ class UserRoleModel(BaseModel):
         user_id
     """
     
-    # Method overide
     def create_user_roles(self, role_id, user_id):
         """Method that creates user_roles"""
-        pass
-
-    def get_user_role_by_field(self, key, value):
-        """Method that returns user_roles entries by any field"""
-        pass
-
+        sql = """INSERT INTO user_roles VALUES(%s, %s) RETURNING role_id;"""
+        return self.sql_executer(sql, (role_id, user_id))
+        
     def get_user_role(self, role_id):
         """Method that returns specific user_role given user_role_id"""
-        sql = """SELECT user_id FROM user_roles WHERE role_id=%s"""
+        sql = """SELECT user_id FROM user_roles WHERE role_id=%s;"""
         return self.sql_executer(sql, (role_id, ))
+
+    def get_user_role_by_id(self, user_id):
+        """Method that returns specific user_role given user_role_id"""
+        sql = """SELECT role_id FROM user_roles WHERE user_id=%s;"""
+        return self.sql_executer(sql, (user_id, ))
 
     def get_user_roles(self):
         """Method that returns user_roles"""
-        pass
+        sql = """SELECT * FROM user_roles;"""
+        return self.sql_executer(sql)
 
-    def delete_user_roles(self):
-        """Method that deletes user_roles"""
-        pass
-
-    def update_user_roles(self, user_role_id, role_id):
+    def update_user_roles(self, user_id, role_id):
         """Method that updates user_roles entries given user_role_id"""
-        pass
+        sql = """UPDATE user_roles SET role_id=%s WHERE user_id=%s RETURNING role_id;"""
+        return self.sql_executer(sql, (user_id, role_id))
+
+

@@ -61,8 +61,8 @@ class ProductsModel(BaseModel):
 
     def update_product_quantity(self, p_id, quantity):
         """Method that update all meal entries"""
-        sql = """UPDATE products SET quantity=(%s)
-                WHERE p_id=(%s) RETURNING p_id;"""
+        sql = """UPDATE products SET quantity=%s
+                WHERE p_id=%s RETURNING p_id;"""
         return self.sql_executer(sql, (p_id, quantity))
 
     
