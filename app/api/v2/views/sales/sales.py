@@ -83,7 +83,7 @@ class Sales(Resource, Initializer):
         """Method that creates sale order"""
         if get_jwt_identity():
             user_ = get_jwt_identity()
-            if user_["role_name"] == "store_attendant":
+            if user_["role_name"] == "store_owner":
                 data_parsed = PARSER.parse_args()
                 prod_id = data_parsed["prod_id"]
                 quantity = data_parsed["quantity"]
@@ -92,16 +92,16 @@ class Sales(Resource, Initializer):
                 if is_valid[0]:
                     product = self.product.get_product_by_id(prod_id)
                     if product:
-                        if quantity <= product[2]:
-                            qty_remain = product[2] - quantity
-                            total_price = product[4] * quantity
-                            sale = self.sale.reate_sale(self, user_["user_id"], self.sale_date, product[1], quantity, product[4], total_price)
+                        if quantity <= product[0][2]:
+                            qty_remain = product[0][2] - quantity
+                            total_price = product[0][4] * quantity
+                            sale = self.sale.reate_sale(self, user_["user_id"], self.sale_date, product[0][1], quantity, product[0][4], total_price)
                             if sale:
                                 self.product.update_product_qty(
                                 prod_id, qty_remain)
                                 self.response = self.modresp.create_response("Sale")
                         else: self.response = self.sale.get_minimum_allowed(
-                            product[2], product[1])
+                            product[0][2], product[0][1])
                     else:
                         self.response = self.modresp.does_not_exist_response(prod_id, "Product")
                 else:
