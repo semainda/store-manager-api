@@ -16,7 +16,8 @@ API for Store Manager web application that helps store owners manage sales and p
 5. Register Products Categories
 6. Register Products Sub-Categories
 7. Register a Sale
-8. Generate Sales Summary
+8. Generate Products Sales Status
+9. Generate Sales Summary
 
 ## Prerequisite
 
@@ -65,13 +66,13 @@ API for Store Manager web application that helps store owners manage sales and p
 
 ```$ pytest app/tests"```
 
-## Login API - Endpoints: /api/v1/
+## Login API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
 POST  | /auth/login | Login a user
 
-## Roles API - Endpoints: /api/v1/
+## Roles API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
@@ -81,17 +82,16 @@ GET  | /roles/role_id | Get a specific role
 PUT  | /roles/role_id | Update a specific role
 DEL  | /roles/role_id | Delete a specific role
 
-## Users API - Endpoints: /api/v1/
+## Users API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
 POST | /users | Register a new store user
 GET  | /users | Get all store users
 GET  | /users/user_id | Get a specific user
-GET  | /users/myprofile | Get a specific user profile
-DEL  | /roles/role_id | Delete a specific role
+GET  | /users/profile | Get a specific user profile
 
-## Users Roles API - Endpoints: /api/v1/
+## Users Roles API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
@@ -99,8 +99,9 @@ POST |  /users/roles | Assign a role to an attendant
 GET  | /users/roles  | Get users with assigned roles
 GET  | /users/roles/user_role_id | Get a specific user role
 PUT  | /users/roles/user_role_id | Update a specific user role
+PUT  | /users/roles/role_id | Update users roles with a specific role_id
 
-## Product Categories API - Endpoints: /api/v1/
+## Product Categories API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
@@ -109,7 +110,7 @@ GET  | /categories | Get all products categories
 GET  | /categories/cat_id | Get a specific products category
 PUT  | /categories/cat_id | Update a specific product category
 
-## Product Sub-Categories API - Endpoints: /api/v1/
+## Product Sub-Categories API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
@@ -118,7 +119,7 @@ GET  | /subcategories | Get all products subcategories
 GET  | /subcategories/sub_id | Get a specific products subcategory
 PUT  | /subcategories/sub_id | Update a specific product subcategory
 
-## Products API - Endpoints: /api/v1/
+## Products API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
@@ -126,18 +127,32 @@ POST | /products | Register a new product
 GET  | /products | Get all products
 GET  | /products/prod_id | Get a specific products
 
-## Sales API - Endpoints: /api/v1/
+## Sales API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
 POST | /sales | Register a new sale order
 GET  | /sales | Get all sales orders
-GET  | /sales/mysales | Get attendant all sales orders
 GET  | /sales/sale_id | Get a specific sale order
 
-## Sales Summary API - Endpoints: /api/v1/
+## Sales Summary API - Endpoints: /api/v2/
 
 Method | Endpoint | Functionality
 ----| ---- | ---
-GET  | /sales/summary | Get all sales summary
+GET  | /sales/summary | Get all sales detail summary group by attendants
+GET  | /sales/summary/user_id | Get sales summary for a particular user
 GET  | /sales/sale_id | Get a specific sale summary
+GET  | /sales/mysales | Get attendant all sales orders summary
+
+## Store Sales Summary API - Endpoints: /api/v2/
+
+Method | Endpoint | Functionality
+----| ---- | ---
+GET  | /sales/store/summary | Get a general summary of all sales
+
+## Product Sales Status API - Endpoints: /api/v2/
+
+Method | Endpoint | Functionality
+----| ---- | ---
+GET  | /products/status | Get all products sales status
+GET  | /products/status/prod_id | Get a particular product sales status
