@@ -9,13 +9,12 @@ class BaseModel:
     def __init__(self):
         self.conn = DatabaseOperations().db_con()
 
-    def sql_executer(self, sql, sql_value=None):
+    def sql_executer(self, sql_query):
         """
             Method that performs read operations to return rows
         """
         with self.conn:
             with self.conn.cursor() as curr:
-                curr.execute(sql, sql_value)
+                curr.execute(sql_query)
                 rows = curr.fetchall()
         return rows
-    
