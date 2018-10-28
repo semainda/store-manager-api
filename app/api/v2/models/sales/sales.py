@@ -1,49 +1,51 @@
-"""Module that defines sales model"""
+"""Module that defines sales_transactions model"""
 
 # local imports
 from ..models import BaseModel
 
 class SalesModel(BaseModel):
     """
-    Class that represents sales data structure
+    Class that represents sales_transactions
 
     The following attributes of sales are stored in this data structure:
         sale_id
         user_id
-        sale_date
+        sale_date 
     """
-    def create_sale(self, user_id, sale_date, prod_name, sold_qty, price, total):
-        """Method that creates meal"""
-        sql ="""WITH sale AS(
-                    INSERT INTO sales(user_id, sale_date)
-                    VALUES(%s, %s) RETURNING sale_id
-                )
-                INSERT INTO sales_transactions(sale_id, p_id, sold_qty, price, total)
-                SELECT sale.p_id, %s, %s, %s, %s FROM sale RETURNING trans_id;"""
-        return self.sql_executer(sql, (user_id, sale_date, prod_name, sold_qty, price, total))
-
+    def create_sale(self, user_id, p_id, sold_qty, sale_date):
+        """Method that creates sales_transactions"""
+        sql ="""INSERT INTO sales_transactions(
+                user_id, p_id, sold_qty, sale_date)
+                VALUES('{}', '{}', '{}', '{}')
+                RETURNING trans_id""".format(
+                    user_id, p_id, sold_qty, sale_date)
+        return self.sql_executer(sql)
 
     def get_sales(self):
-        """Method that return sales"""
-        sql = """SELECT * FROM sales"""
-        rows = self.sql_executer(sql)
-        sales_list = []
-        for _, items in enumerate(rows):
-            sale_id, user_id, date = items
-            display = dict(
-                sale_id=sale_id,
-                user_id=user_id,
-                date=date
-                )
-            sales_list.append(display)
-        return sales_list
+        """Method that return sales_transactions"""
+        sql = """
+            SELECT s.trans_id, s.user_id, p.prod_name, p.price, s.sold_qty,
+                (p.price * s.sold_qty) AS total, to_char(s.sale_date, 'YYYY-MM-DD') AS sale_date
+            FROM products p, sales_transactions s
+            WHERE s.p_id = p.p_id
+            ORDER BY sale_date;"""
+        sales = self.sql_executer(sql)
+        return sales
     
-    def get_sale_by_id(self, sale_id):
+    def get_sale(self, key, val):
         """Method that check for a given field and returns it"""
-        sql = """SELECT * FROM sales WHERE sale_id=%s"""
-        return self.sql_executer(sql, (sale_id, ))
-
-    def get_minimum_allowed(self, available_qty, prod_name):
-        """Method that sold_qty against minimum value to be in store"""
-        return self.check_for_min_entries(available_qty, prod_name)
-
+        sql ="""SELECT s.trans_id, s.user_id, p.prod_name, p.price, s.sold_qty,
+                (p.price * s.sold_qty) AS total, to_char(s.sale_date, 'YYYY-MM-DD') AS sale_date
+            FROM products p, sales_transactions s
+            WHERE s.p_id = p.p_id
+            AND s.{}='{}'
+            ORDER BY sale_date;""".format(key, val)
+        sale = self.sql_executer(sql)
+        return sale
+    
+    def get_sale_users(self):
+        """Method that returns unique list of sales users"""
+        sql ="""SELECT DISTINCT s.user_id, u.first_name, u.last_name
+                FROM sales_transactions s, users u
+                WHERE s.user_id = u.user_id;"""
+        return self.sql_executer(sql)

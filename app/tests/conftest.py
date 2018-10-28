@@ -1,8 +1,7 @@
 """This module contains configurations that will accomodate testing"""
 # Thirdparty imports
 import os
-import pytest
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, JWTManager 
+import pytest 
 # Local imports
 from app.db_config.store_db_setups import DatabaseOperations
 from app import StoreManager

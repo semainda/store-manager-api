@@ -28,3 +28,15 @@ class AuthResponses:
             "Message":
             "Holaa! You Logged in as {}.".format(user_name),
             "Token": "{}".format(access_token)}, 201
+    
+    def forbidden_user_role_delete_response(self):
+        """Method that returns unauthorized delete response"""
+        return {
+            "Message": 
+            "This role has already being assigned to users."
+            "To delete it, revoke it from users first"}, 403
+    
+    def forbidden_super_user_role_update_response(self, user):
+        """Method that returns unauthorized super user role update response"""
+        return {
+            "Message": user + " role can not be updated"}, 403

@@ -13,21 +13,17 @@ class UserRoleModel(BaseModel):
         role_id
         user_id
     """
-    
     def create_user_roles(self, role_id, user_id):
         """Method that creates user_roles"""
-        sql = """INSERT INTO user_roles VALUES(%s, %s) RETURNING role_id;"""
-        return self.sql_executer(sql, (role_id, user_id))
-        
-    def get_user_role(self, role_id):
-        """Method that returns specific user_role given user_role_id"""
-        sql = """SELECT user_id FROM user_roles WHERE role_id=%s;"""
-        return self.sql_executer(sql, (role_id, ))
+        sql ="""INSERT INTO user_roles(role_id, user_id) VALUES('{}', '{}')
+                RETURNING role_id;""".format(role_id, user_id)
+        return self.sql_executer(sql)
 
-    def get_user_role_by_id(self, user_id):
+    def get_user_role(self, key, val):
         """Method that returns specific user_role given user_role_id"""
-        sql = """SELECT role_id FROM user_roles WHERE user_id=%s;"""
-        return self.sql_executer(sql, (user_id, ))
+        sql = """SELECT * FROM user_roles WHERE {}='{}';""".format(key, val)
+        user_role = self.sql_executer(sql)
+        return user_role
 
     def get_user_roles(self):
         """Method that returns user_roles"""
@@ -36,7 +32,6 @@ class UserRoleModel(BaseModel):
 
     def update_user_roles(self, user_id, role_id):
         """Method that updates user_roles entries given user_role_id"""
-        sql = """UPDATE user_roles SET role_id=%s WHERE user_id=%s RETURNING role_id;"""
-        return self.sql_executer(sql, (user_id, role_id))
-
-
+        sql ="""UPDATE user_roles SET role_id='{}' WHERE user_id='{}'
+                RETURNING user_id;""".format(role_id, user_id)
+        return self.sql_executer(sql)

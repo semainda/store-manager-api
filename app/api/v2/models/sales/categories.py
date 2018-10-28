@@ -13,40 +13,32 @@ class CategoriesModel(BaseModel):
     """
     def create_category(self, cat_name):
         """Method that create category"""
-        sql = "INSERT INTO categories(cat_name) VALUES(%s) RETURNING cat_name;"
-        return self.sql_executer(sql, (cat_name, ))
+        sql ="""INSERT INTO categories(cat_name) VALUES('{}')
+                RETURNING cat_name;""".format(cat_name)
+        return self.sql_executer(sql)
 
-    def get_category_by_id(self, cat_id):
+    def get_category(self, key, val):
         """Method that returns a specific category"""
-        sql = "SELECT cat_name FROM categories WHERE cat_id=%s;"
-        return self.sql_executer(sql, (cat_id,))
+        sql = "SELECT * FROM categories WHERE {}='{}';".format(key, val)
+        category = self.sql_executer(sql)
+        if category:
+            return category[0]
+        return category
 
-    def get_category_by_name(self, cat_name):
-        """Method that returns a specific category"""
-        sql = "SELECT cat_id FROM categories WHERE cat_name=%s;"
-        return self.sql_executer(sql, (cat_name,))
-
-    def get_all_categories(self):
+    def get_categories(self):
         """Method that returns a list of categories"""
         sql = "SELECT * FROM categories;"
-        rows = self.sql_executer(sql)
-        categories = []
-        for _, items in enumerate(rows):
-            cat_id, cat_name = items
-            category = dict(
-                Id=cat_id,
-                Name=cat_name.upper()
-            )
-            categories.append(category)
+        categories = self.sql_executer(sql)
         return categories
 
     def update_category(self, cat_name, cat_id):
         """Method that update specific category"""
-        sql = "UPDATE categories SET cat_name=(%s)\
-            WHERE cat_id=(%s) RETURNING cat_name;"
-        return self.sql_executer(sql, (cat_name, cat_id))
+        sql ="""UPDATE categories SET cat_name='{}' WHERE cat_id='{}' 
+                RETURNING cat_name;""".format(cat_name, cat_id)
+        return self.sql_executer(sql)
 
     def delete_category(self, cat_id):
         """Method that delete specific category"""
-        sql = "DELETE FROM categories WHERE cat_id=(%s) RETURNING cat_name CASCADE;"
-        return self.sql_executer(sql, (cat_id,))
+        sql ="""DELETE FROM categories WHERE cat_id='{}'
+                RETURNING cat_name CASCADE;""".format(cat_id)
+        return self.sql_executer(sql)
