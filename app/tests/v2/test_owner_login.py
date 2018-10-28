@@ -3,8 +3,8 @@ import json
 import pytest
 
 login_credentions = [
-    (dict(), 400, b"Key user_name not found"),
-    (dict(user_name="semainda"), 400, b"Key password not found"),
+    (dict(), 400, b"Key user_name is not found or value given is not of required type.Make sure a value is 'string' type"),
+    (dict(user_name="semainda"), 400, b"Key password is not found or value given is not of required type.Make sure a value is 'string' type"),
     (dict(
         user_name="semainda",
         password="ahfjhf"), 401, b"Incorrect username or password"),
