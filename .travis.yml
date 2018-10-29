@@ -8,8 +8,7 @@ env:
 
   STORE_ATTENDANT_ROLE="attendant"
 
-  TEST_DATABASE_URL="dbname='store_manager_test_db' user='postgres'
-    host='127.0.0.1' password='semainda'"
+  TEST_DATABASE_URL="dbname='store_manager_test_db' user='postgres' host='127.0.0.1' password='semainda'"
 
 python:
   - "3.6"
