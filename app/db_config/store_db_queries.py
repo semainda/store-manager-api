@@ -62,10 +62,11 @@ import os, json
 from datetime import datetime
 from passlib.hash import pbkdf2_sha256 as hash256
 
-admin = json.loads(os.getenv("ADMIN_CONFIG"))
+admin = json.loads(os.environ["ADMIN_CONFIG"])
+
 created_date = datetime.now().strftime("%Y-%m-%d")
 
-admin ="""WITH role AS(
+default_admin ="""WITH role AS(
                     INSERT INTO roles(role_name) VALUES('{}') RETURNING role_id
                 ), new_user AS(
                     INSERT INTO users(first_name, last_name, email, user_name,
@@ -74,14 +75,13 @@ admin ="""WITH role AS(
                 )
                 INSERT INTO user_roles(role_id, user_id)
                 SELECT role.role_id, new_user.user_id FROM role, new_user;""".format(
-                    admin["role_name"], admin["first_name"],
-                    admin["last_name"], admin["email"], admin["user_name"],
-                    hash256.hash(admin["password"]), created_date)
+                    admin[0], admin[1], admin[2], admin[3], admin[4],
+                    hash256.hash(admin[5]), created_date)
 
 
 create_table_queries = [
     roles, users, user_roles, categories, subcategories,
-    products, sales_transactions, product_status, admin
+    products, sales_transactions, product_status, default_admin
 ]
 
 # Drop database queries
