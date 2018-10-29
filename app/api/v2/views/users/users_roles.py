@@ -19,7 +19,7 @@ class Initializer:
         self.user = UserModel()
         self.user_role = UserRoleModel()
         self.resp = ModelResponses()
-        self.super_user = current_app.config["DEFAULT_ADMIN"]["role_name"]
+        self.super_user = current_app.config["DEFAULT_ADMIN"][0]
         self.loggein_user = get_jwt_identity()["role_name"]
         self.response = ""
 

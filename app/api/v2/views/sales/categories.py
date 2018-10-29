@@ -23,7 +23,7 @@ class Initializer:
         self.resp = ModelResponses()
         self.cat = CategoriesModel()
         self.response = ""
-        self.super_user = current_app.config["DEFAULT_ADMIN"]["role_name"]
+        self.super_user = current_app.config["DEFAULT_ADMIN"][0]
         self.loggein_user = get_jwt_identity()["role_name"]
 
 

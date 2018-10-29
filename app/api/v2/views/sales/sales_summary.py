@@ -23,7 +23,7 @@ class Initializer:
         self.sale = SalesModel()
         self.resp = ModelResponses()
         self.sale_date = datetime.now().strftime("%Y-%m-%d")
-        self.super_user = current_app.config["DEFAULT_ADMIN"]["role_name"]
+        self.super_user = current_app.config["DEFAULT_ADMIN"][0]
         self.attendant = current_app.config["DEFAULT_ATTENDANT"]
         self.loggein_user = get_jwt_identity()["role_name"]
         self.response = ""
