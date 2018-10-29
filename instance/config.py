@@ -6,7 +6,7 @@ import os, json
 class Config:
     """Class that holds default env configs"""
     DEBUG = False
-    DEFAULT_ADMIN = json.loads(os.getenv("ADMIN_CONFIG"))
+    DEFAULT_ADMIN = json.loads(os.environ["ADMIN_CONFIG"])
     DEFAULT_ATTENDANT = os.getenv("STORE_ATTENDANT_ROLE")
     JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
     DATABASE_URL = os.getenv("DATABASE_URL")
