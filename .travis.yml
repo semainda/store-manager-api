@@ -2,7 +2,7 @@ language: python
 env:
   ENV_CONFIG="testing"
   
-  ADMIN_CONFIG='{"role_name": "store_owner", "first_name": "selemani"}'
+  ADMIN_CONFIG=""
 
   JWT_SECRET_KEY="89769112122070328"
 
