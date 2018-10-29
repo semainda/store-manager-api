@@ -2,8 +2,7 @@ language: python
 env:
   ENV_CONFIG="testing"
   
-  ADMIN_CONFIG=\
-  '{"role_name": "store_owner", "first_name": "selemani",
+  ADMIN_CONFIG='{"role_name": "store_owner", "first_name": "selemani",
   "last_name": "nuru", "email": "semaindas@gmail.com",
   "user_name": "semainda", "password": "mk911212"}'
   
