@@ -1,0 +1,35 @@
+language: python
+env:
+  ENV_CONFIG="testing"
+  
+  ADMIN_CONFIG='["store_owner", "selemani", "nuru", "semaindas@gmail.com", "semainda", "mk911212"]'
+
+  JWT_SECRET_KEY="89769112122070328"
+
+  STORE_ATTENDANT_ROLE="attendant"
+
+  TEST_DATABASE_URL="dbname='store_manager_test_db' user='postgres' host='127.0.0.1' password='semainda'"
+
+python:
+  - "3.6"
+
+install:
+  - pip install pipenv
+  - pipenv install
+  - pipenv install coveralls codecov
+
+services:
+  - postgresql
+addons:
+  postgresql: "9.6"
+
+before_script:
+  - psql -c 'CREATE DATABASE store_manager_test_db' -U postgres
+  - psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to postgres ;" -U postgres
+
+script:
+  - pytest --cov=app/tests --cov-report=html
+
+after_success:
+  - coveralls
+  - codecov --token=64d68490-a7de-4bea-9b1b-1d52a961e301
