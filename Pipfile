@@ -20,5 +20,6 @@ codecov = "*"
 pytest-cov = "*"
 termcolor = "*"
 "psycopg2-binary" = "*"
+flask-cors = "*"
 
 [dev-packages]

@@ -3,6 +3,7 @@
 from flask import Flask, Blueprint
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
 
 # local imports
 from instance.config import APP_ENV_CONFIG
@@ -27,7 +28,9 @@ class StoreManager:
         self.app.register_blueprint(users_blueprint)
         self.app.register_blueprint(sales_blueprint)
         # initialize JWTManager
-        JWTManager(self.app)
+        self.jwt = JWTManager(self.app)
+        # initialize CORS
+        self.cors = CORS(self.app)
 
     def create_app(self):
         """Method that instantiate flask app with a given config"""
