@@ -1,14 +1,4 @@
 language: python
-env:
-  ENV_CONFIG="testing"
-  
-  ADMIN_CONFIG='["store_owner", "selemani", "nuru", "semaindas@gmail.com", "semainda", "mk911212"]'
-
-  JWT_SECRET_KEY="89769112122070328"
-
-  STORE_ATTENDANT_ROLE="attendant"
-
-  TEST_DATABASE_URL="dbname='store_manager_test_db' user='postgres' host='127.0.0.1' password='semainda'"
 
 python:
   - "3.6"
