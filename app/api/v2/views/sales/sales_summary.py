@@ -86,24 +86,6 @@ class SalesSummary(Resource, Initializer):
                                 sale_date=user_sale["sale_date"]
                             ) for user_sale in sales if user_sale["user_id"] == user["user_id"]]
                         } for user in seles_users]
-
-
-                    """sales_summary = {
-                        "Total Number of Sales Records Created": 0,
-                        "Total Number of Products Sold": 0,
-                        "Total Worth of Products Sold": 0, "Sale Date": ""}
-                    # for attendant in sales_details:
-                    for orders in sales:
-                        sales_summary[
-                            "Total Number of Sales Records Created"] += 1
-                        sales_summary[
-                            "Total Number of Products Sold"] += orders["sold_qty"]
-                        sales_summary[
-                            "Total Worth of Products Sold"] += orders["total"]
-                        sales_summary["Sale Date"] = orders["sale_date"]
-                    report = {
-                        "Store Manager Sales Summary Reports": [sales_summary]
-                        }"""
                     self.response = sales_details
                 else:
                     self.response = self.resp.does_not_exists_response("Sales")
@@ -200,7 +182,7 @@ class UserSalesSummary(Resource, Initializer):
                         }
                     self.response = report
                 else:
-                    self.response = self.resp.does_not_exist_response(user_id, "Sales")
+                    self.response = self.resp.does_not_exist_response("user_id", user_id, "Sales")
             else:
                 self.response = self.resp.forbidden_user_access_response()
         else:
