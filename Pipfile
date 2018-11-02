@@ -22,5 +22,6 @@ termcolor = "*"
 "psycopg2-binary" = "*"
 flask-cors = "*"
 nose = "*"
+pytest-ordering = "*"
 
 [dev-packages]
