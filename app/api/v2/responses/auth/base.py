@@ -20,7 +20,7 @@ class AuthResponses:
 
     def user_login_with_error_response(self):
         """Method that returns incorrect login"""
-        return {"Message": "Incorrect username or password"}, 401
+        return {"Message": "Invalid username/password supplied"}, 401
 
     def user_success_login_response(self, user_name, access_token):
         """Method that returns valid login response"""
