@@ -23,7 +23,7 @@ api.add_resource(SalesActivity, "/sales/<int:user_id>")
 # returns attendant sales given
 api.add_resource(UserSales, "/user/sales")
 # returns attendant specific sale given sale_id
-api.add_resource(UserSalesActivity, "/sales/<int:sale_id>")
+api.add_resource(UserSalesActivity, "/user/sales/<int:sale_id>")
 api.add_resource(ProductStatus, "/products/status")
 api.add_resource(ProductStatusActivity, "/products/status/<int:prod_id>")
 # sales summary for all attendants

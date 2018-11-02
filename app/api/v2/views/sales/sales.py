@@ -18,7 +18,7 @@ PARSER = reqparse.RequestParser()
 PARSER.add_argument(
     "prod_id", required=True, type=int,
     help="Key prod_id is not found or value given is not of required type."
-        "Make sure a value is 'integer type")
+        "Make sure a value is 'integer' type")
 PARSER.add_argument(
     "quantity", required=True, type=int,
     help="Key quantity is not found or value given is not of required type."
@@ -150,7 +150,7 @@ class UserSalesActivity(Resource, Initializer):
                 user_id = get_jwt_identity()["user_id"]
                 sales = self.sale.get_sale("user_id", user_id)
                 if sales:
-                    sale = [ sale for sale in sales if sale["trans_id"] == sale_id]  
+                    sale = [sale for sale in sales if sale["trans_id"] == sale_id]  
                     self.response = self.resp.exist_response(sale, "Sale")
                 else:
                     self.response = self.resp.does_not_exists_response("Sale")
