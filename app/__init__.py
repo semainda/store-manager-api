@@ -12,6 +12,7 @@ from .db_config.store_db_setups import DatabaseOperations
 # api endpoints imports
 from .api.v2.views.users import users_blueprint
 from .api.v2.views.sales import sales_blueprint
+from .views import root_blueprint
 
 
 class StoreManager:
@@ -27,6 +28,7 @@ class StoreManager:
         # blueprint rgistration
         self.app.register_blueprint(users_blueprint)
         self.app.register_blueprint(sales_blueprint)
+        self.app.register_blueprint(root_blueprint)
         # initialize JWTManager
         self.jwt = JWTManager(self.app)
         # initialize CORS
