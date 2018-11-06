@@ -30,10 +30,12 @@ class UserModel(BaseModel):
 
     def get_user(self, key, val):
         """Method for get a specific user"""
-        sql ="""SELECT user_id, first_name, last_name, email, user_name,
+        sql ="""SELECT u.user_id, u.first_name, u.last_name, u.email, u.user_name, r.role_name,
                     to_char(created_at, 'YYYY-MM-DD') AS created_at
-                FROM users
-                WHERE {}='{}';""".format(key, val)
+                FROM users u, roles r, user_roles s
+                WHERE s.user_id=u.user_id
+                AND s.role_id = r.role_id
+                AND U.{}='{}';""".format(key, val)
         user = self.sql_executer(sql)
         if user:
             return user[0]
