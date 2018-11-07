@@ -96,7 +96,6 @@ class RolesActivity(Resource, Initializer):
                     role = self.role.get_role("role_id", role_id)
                     if role:
                         if role["role_name"] != self.super_user:
-
                             role_name_ = self.role.get_role("role_name", role_name)
                             if not role_name_:
                                 self.role.update_role(role_name, role_id)

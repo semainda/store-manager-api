@@ -11,7 +11,7 @@ def test_admin_login(test_client, login_data, resp_code, msg):
     assert response.status_code == resp_code
     assert msg in response.data
 
-
+@pytest.mark.run(order=4)
 @pytest.mark.parametrize("login_data, resp_code, msg", attendant_login_data)
 def test_attendant_login(test_client, login_data, resp_code, msg):
     response = test_client.post(
