@@ -95,13 +95,16 @@ class RolesActivity(Resource, Initializer):
                 if is_valid[0]:
                     role = self.role.get_role("role_id", role_id)
                     if role:
-                        role_name_ = self.role.get_role("role_name", role_name)
-                        if not role_name_:
-                            self.role.update_role(role_name, role_id)
-                            self.response = self.resp.update_response("role_id", role_id, "Role")
+                        if role["role_name"] != self.super_user:
+                            role_name_ = self.role.get_role("role_name", role_name)
+                            if not role_name_:
+                                self.role.update_role(role_name, role_id)
+                                self.response = self.resp.update_response("role_id", role_id, "Role")
+                            else:
+                                self.response = self.resp.already_exist_response(
+                                    "Role", role_name)
                         else:
-                            self.response = self.resp.already_exist_response(
-                                "Role", role_name)
+                            self.response = self.resp.forbidden_super_user_role_update_response(self.super_user)
                     else:
                        self.response = self.resp.does_not_exist_response(
                            "role_id", role_id, "Role")

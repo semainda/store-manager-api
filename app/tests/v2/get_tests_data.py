@@ -102,7 +102,10 @@ update_role_data = [
     (dict(
         role_name="store_cleck"), 5, 404,
         b"Role 'role_id: 5' does not exists"),
-    (dict(role_name="store_owner"), 1, 409, b"Role 'store_owner' already exists"),
+    (dict(role_name="attendant"), 2, 409,
+        b"Role 'attendant' already exists"),
+    (dict(role_name="store_owner"), 1, 403,
+        b"store_owner role can not be updated"),
     (dict(
         role_name="store_keeper&"), 3, 400,
         b"role_name value is not of valid type.Make sure a value is not empty and is of valid type"),
